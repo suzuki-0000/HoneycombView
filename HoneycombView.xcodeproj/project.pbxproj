@@ -10,7 +10,6 @@
 		8976D2B51B5F3CBC0016408F /* HoneycombView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8976D2B41B5F3CBC0016408F /* HoneycombView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8976D2BB1B5F3CBC0016408F /* HoneycombView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8976D2AF1B5F3CBC0016408F /* HoneycombView.framework */; };
 		8976D2C21B5F3CBC0016408F /* HoneycombViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2C11B5F3CBC0016408F /* HoneycombViewTests.swift */; };
-		8976D2CD1B5F3CDD0016408F /* HoneycombImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2CB1B5F3CDD0016408F /* HoneycombImageView.swift */; };
 		8976D2CE1B5F3CDD0016408F /* HoneycombView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2CC1B5F3CDD0016408F /* HoneycombView.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,7 +30,6 @@
 		8976D2BA1B5F3CBC0016408F /* HoneycombViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoneycombViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8976D2C01B5F3CBC0016408F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8976D2C11B5F3CBC0016408F /* HoneycombViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoneycombViewTests.swift; sourceTree = "<group>"; };
-		8976D2CB1B5F3CDD0016408F /* HoneycombImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombImageView.swift; sourceTree = "<group>"; };
 		8976D2CC1B5F3CDD0016408F /* HoneycombView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,7 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				8976D2B41B5F3CBC0016408F /* HoneycombView.h */,
-				8976D2CB1B5F3CDD0016408F /* HoneycombImageView.swift */,
 				8976D2CC1B5F3CDD0016408F /* HoneycombView.swift */,
 				8976D2B21B5F3CBC0016408F /* Supporting Files */,
 			);
@@ -215,7 +212,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8976D2CD1B5F3CDD0016408F /* HoneycombImageView.swift in Sources */,
 				8976D2CE1B5F3CDD0016408F /* HoneycombView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,7 +272,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -318,7 +314,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -410,6 +406,7 @@
 				8976D2C71B5F3CBC0016408F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8976D2C81B5F3CBC0016408F /* Build configuration list for PBXNativeTarget "HoneycombViewTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +415,7 @@
 				8976D2CA1B5F3CBC0016408F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

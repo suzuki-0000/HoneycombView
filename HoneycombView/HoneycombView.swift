@@ -8,24 +8,25 @@
 
 import UIKit
 
+public enum HoneycombAnimateType { case FadeIn }
 
-class HoneycombView: UIView{
+public class HoneycombView: UIView{
     
-    var animateType:HoneycombAnimateType = .FadeIn
+    public var animateType:HoneycombAnimateType = .FadeIn
     
-    var diameter:CGFloat = 100
-    var margin:CGFloat = 10
+    public var diameter:CGFloat = 100
+    public var margin:CGFloat = 10
     
-    required init(coder aDecoder: NSCoder) {
+    public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         clipsToBounds = true
     }
     
-    func configrationForHoneycombView(){
+    public func configrationForHoneycombView(){
         // setup layout
         let structure = constructView()
         
@@ -37,7 +38,7 @@ class HoneycombView: UIView{
         }
     }
     
-    func configrationForHoneycombViewWithImages(images:[UIImage]){
+    public func configrationForHoneycombViewWithImages(images:[UIImage]){
         // setup layout
         let structure = constructView()
         
@@ -54,7 +55,7 @@ class HoneycombView: UIView{
  
     }
     
-    func configrationForHoneycombViewWithURL(urls:[String]){
+    public func configrationForHoneycombViewWithURL(urls:[String]){
         // setup struture
         let structure = constructView()
         
@@ -146,19 +147,79 @@ class HoneycombView: UIView{
     }
     
     
-    func animate(){
+    public func animate(){
         animate(duration:2.0)
     }
     
-    func animate(#duration: Double){
+    public func animate(#duration: Double){
         animate(duration:duration, delay:0.0)
     }
     
-    func animate(#duration: Double, delay: Double){
+    public func animate(#duration: Double, delay: Double){
         for honeycombView in subviews {
             if honeycombView is HoneycombImageView {
                 (honeycombView as! HoneycombImageView).animate(duration: duration, delay:delay)
             }
+        }
+    }
+}
+
+public class HoneycombImageView: UIImageView {
+    
+    public required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = UIColor.darkGrayColor()
+        setupHexagonView()
+    }
+    
+    // MARK: - setup layout
+    public func setupHexagonView(){
+        let maskLayer = CAShapeLayer()
+        maskLayer.fillRule = kCAFillRuleEvenOdd
+        maskLayer.frame = bounds
+        
+        let width:CGFloat = frame.size.width
+        let height:CGFloat = frame.size.height
+        
+        UIGraphicsBeginImageContext(frame.size)
+        let path = UIBezierPath()
+        path.moveToPoint(CGPointMake(width/2, 0))
+        path.addLineToPoint(CGPointMake(width, height / 4))
+        path.addLineToPoint(CGPointMake(width, height * 3 / 4))
+        path.addLineToPoint(CGPointMake(width / 2, height))
+        path.addLineToPoint(CGPointMake(0, height * 3 / 4))
+        path.addLineToPoint(CGPointMake(0, height / 4))
+        path.closePath()
+        path.fill()
+        maskLayer.path = path.CGPath
+        UIGraphicsEndImageContext()
+        layer.mask = maskLayer
+    }
+    
+    
+    // MARK:- animate
+    public func animate(animateType: HoneycombAnimateType = .FadeIn){
+        animate(duration:2.0)
+    }
+    
+    public func animate(#duration: Double, animateType: HoneycombAnimateType = .FadeIn){
+        animate(duration:2.0, delay:2.0)
+    }
+    
+    public func animate(#duration: Double, delay: Double, animateType: HoneycombAnimateType = .FadeIn){
+        switch animateType{
+        case .FadeIn :
+            alpha = 0.0
+            let delay = Double(rand() % 100) / 100.0
+            UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.alpha = 1.0
+                }, completion: { animateFinish in
+            })
         }
     }
 }

@@ -25,6 +25,27 @@
 			remoteGlobalIDString = 8976D2D71B5F4E570016408F;
 			remoteInfo = HoneycombViewExample;
 		};
+		8976D37D1B5F597F0016408F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8976D3781B5F597F0016408F /* HoneycombView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8976D2AF1B5F3CBC0016408F;
+			remoteInfo = HoneycombView;
+		};
+		8976D37F1B5F597F0016408F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8976D3781B5F597F0016408F /* HoneycombView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8976D2BA1B5F3CBC0016408F;
+			remoteInfo = HoneycombViewTests;
+		};
+		89AC9DE51B5F7DF90072EA65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8976D3781B5F597F0016408F /* HoneycombView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8976D2AE1B5F3CBC0016408F;
+			remoteInfo = HoneycombView;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +61,7 @@
 		8976D2FF1B5F4E740016408F /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		8976D3001B5F4E740016408F /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		8976D3041B5F4E8B0016408F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		8976D3781B5F597F0016408F /* HoneycombView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HoneycombView.xcodeproj; path = ../HoneycombView.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +85,7 @@
 		8976D2CF1B5F4E570016408F = {
 			isa = PBXGroup;
 			children = (
+				8976D3781B5F597F0016408F /* HoneycombView.xcodeproj */,
 				8976D2DA1B5F4E570016408F /* HoneycombViewExample */,
 				8976D2F01B5F4E580016408F /* HoneycombViewExampleTests */,
 				8976D2D91B5F4E570016408F /* Products */,
@@ -126,6 +149,15 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		8976D3791B5F597F0016408F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8976D37E1B5F597F0016408F /* HoneycombView.framework */,
+				8976D3801B5F597F0016408F /* HoneycombViewTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,6 +172,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				89AC9DE61B5F7DF90072EA65 /* PBXTargetDependency */,
 			);
 			name = HoneycombViewExample;
 			productName = HoneycombViewExample;
@@ -193,6 +226,12 @@
 			mainGroup = 8976D2CF1B5F4E570016408F;
 			productRefGroup = 8976D2D91B5F4E570016408F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8976D3791B5F597F0016408F /* Products */;
+					ProjectRef = 8976D3781B5F597F0016408F /* HoneycombView.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8976D2D71B5F4E570016408F /* HoneycombViewExample */,
@@ -200,6 +239,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8976D37E1B5F597F0016408F /* HoneycombView.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HoneycombView.framework;
+			remoteRef = 8976D37D1B5F597F0016408F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8976D3801B5F597F0016408F /* HoneycombViewTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = HoneycombViewTests.xctest;
+			remoteRef = 8976D37F1B5F597F0016408F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8976D2D61B5F4E570016408F /* Resources */ = {
@@ -248,6 +304,11 @@
 			isa = PBXTargetDependency;
 			target = 8976D2D71B5F4E570016408F /* HoneycombViewExample */;
 			targetProxy = 8976D2EE1B5F4E580016408F /* PBXContainerItemProxy */;
+		};
+		89AC9DE61B5F7DF90072EA65 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HoneycombView;
+			targetProxy = 89AC9DE51B5F7DF90072EA65 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -299,7 +360,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -338,7 +399,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
