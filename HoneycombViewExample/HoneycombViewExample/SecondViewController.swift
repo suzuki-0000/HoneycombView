@@ -22,7 +22,7 @@ class SecondViewController: UIViewController {
         
         let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
         honeycombView.diameter = 100.0
-        honeycombView.margin = 2.0
+        honeycombView.margin = 1.0
         honeycombView.configrationForHoneycombViewWithImages(images)
         view.addSubview(honeycombView)
         
