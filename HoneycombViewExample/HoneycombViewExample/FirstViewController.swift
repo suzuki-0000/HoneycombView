@@ -20,6 +20,7 @@ class FirstViewController: UIViewController {
         honeycombView.configrationForHoneycombView()
         view.addSubview(honeycombView)
         
+        honeycombView.animate(duration: 2.0)
     }
     
 }

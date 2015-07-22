@@ -37,7 +37,7 @@ class ThirdViewController: UIViewController {
         honeycombView.configrationForHoneycombViewWithURL(users.map{ $0.profileImageURL })
         view.addSubview(honeycombView)
         
-        honeycombView.animate(duration: 2.0, delay:2.0)
+        honeycombView.animate(duration: 2.0, delay:1.0)
         
     }
 }

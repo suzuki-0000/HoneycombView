@@ -215,7 +215,7 @@ public class HoneycombImageView: UIImageView {
         switch animateType{
         case .FadeIn :
             alpha = 0.0
-            let delay = Double(rand() % 100) / 100.0
+            let delay = (Double(rand() % 100) / 100.0) + delay
             UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.alpha = 1.0
                 }, completion: { animateFinish in
