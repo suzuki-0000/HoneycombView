@@ -2,8 +2,8 @@
 //  ThirdViewController.swift
 //  HoneycombView
 //
-//  Created by 鈴木 啓司 on 7/1/15.
-//  Copyright (c) 2015 鈴木 啓司. All rights reserved.
+//  Created bysuzuki_keishi on 7/1/15.
+//  Copyright (c) 2015suzuki_keishi. All rights reserved.
 //
 
 import UIKit
@@ -36,8 +36,5 @@ class ThirdViewController: UIViewController {
         honeycombView.margin = 0.0
         honeycombView.configrationForHoneycombViewWithURL(users.map{ $0.profileImageURL })
         view.addSubview(honeycombView)
-        
-        honeycombView.animate(duration: 2.0, delay:1.0)
-        
     }
 }

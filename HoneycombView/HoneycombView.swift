@@ -2,20 +2,23 @@
 //  HoneycombView.swift
 //  HoneycombView
 //
-//  Created by 鈴木 啓司 on 7/1/15.
-//  Copyright (c) 2015 鈴木 啓司. All rights reserved.
+//  Created bysuzuki_keishi on 7/1/15.
+//  Copyright (c) 2015suzuki_keishi. All rights reserved.
 //
 
 import UIKit
 
 public enum HoneycombAnimateType { case FadeIn }
 
+// MARK: - HoneycombView
 public class HoneycombView: UIView{
     
     public var animateType:HoneycombAnimateType = .FadeIn
     
     public var diameter:CGFloat = 100
     public var margin:CGFloat = 10
+    public var honeycombBackgroundColor = UIColor.blackColor()
+    public var shouldCacheImage = false
     
     public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -26,26 +29,21 @@ public class HoneycombView: UIView{
         clipsToBounds = true
     }
     
-    public func configrationForHoneycombView(){
-        // setup layout
+    public func configrationForHoneycombView() {
         let structure = constructView()
         
-        // set view
         for point in structure {
-            let honeycombImageView = HoneycombImageView(frame: CGRectMake(0, 0, diameter, diameter))
-            honeycombImageView.center = point
+            let honeycombImageView = initializeHoneyCombImageView(point)
             addSubview(honeycombImageView)
         }
     }
     
     public func configrationForHoneycombViewWithImages(images:[UIImage]){
-        // setup layout
         let structure = constructView()
         
-        // set view
-        for (index, element)in enumerate(structure){
-            let honeycombImageView = HoneycombImageView(frame: CGRectMake(0, 0, diameter, diameter))
-            honeycombImageView.center = element
+        for (index, point)in enumerate(structure){
+            let honeycombImageView = initializeHoneyCombImageView(point)
+            
             // set image if images have
             if images.count > index {
                 honeycombImageView.image = images[index]
@@ -55,41 +53,35 @@ public class HoneycombView: UIView{
  
     }
     
-    public func configrationForHoneycombViewWithURL(urls:[String]){
-        // setup struture
+    public func configrationForHoneycombViewWithURL(urls:[String], var placeholder:UIImage? = nil){
         let structure = constructView()
+        let holder = placeholder != nil ? placeholder! : UIImage()
         
-        // add to view
-        for (index, element)in enumerate(structure){
-            let honeycombImageView = HoneycombImageView(frame: CGRectMake(0, 0, diameter, diameter))
-            honeycombImageView.center = element
+        for (index, point)in enumerate(structure){
+            let honeycombImageView = initializeHoneyCombImageView(point)
+            
             if urls.count > index {
-               let imgURL: NSURL = NSURL(string: urls[index])!
-               let request: NSURLRequest = NSURLRequest(URL: imgURL)
-               NSURLConnection.sendAsynchronousRequest(
-                    request, queue: NSOperationQueue.mainQueue(),
-                    completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
-                    if error == nil {
-                        honeycombImageView.image = UIImage(data: data)
-                    }
-                })
+                honeycombImageView.imageFromURL(urls[index], placeholder: holder, shouldCacheImage: shouldCacheImage)
             }
             addSubview(honeycombImageView)
         }
     }
     
+    private func initializeHoneyCombImageView(point:CGPoint) -> HoneycombImageView{
+        let honeycombImageView = HoneycombImageView(frame: CGRectMake(0, 0, diameter, diameter))
+        honeycombImageView.center = point
+        honeycombImageView.backgroundColor = honeycombBackgroundColor
+        return honeycombImageView
+    }
+    
     private func constructView() -> [CGPoint]{
         var structure = [CGPoint]()
         
-        // static name of 'side'
+        // initialize
         let side = (buttom: 0, left: 1, upper: 2, right: 3)
-        // calculate center point
         let centerPoint = CGPointMake(frame.size.width/2, frame.size.height/2)
-        // calculate user radius include magin
         let radius =  (diameter + margin) / 2.0
-        // calculate size of x and y. y is for shifting location a half
         let interval = CGSizeMake(radius * 2.0, radius * 2.0 - (diameter/4))
-        
         let layerCount = Int(ceil(frame.height/max(interval.width, interval.height)))
         
         // configure view point
@@ -100,12 +92,9 @@ public class HoneycombView: UIView{
                 continue
             }
             
-            // count in side
             let countInSide = layerId * 2
             for sideId in 0..<4 {
-                // direction of x, y
                 var (dx:Int, dy:Int) = (0, 0)
-                // point x, y from center point
                 var (a:Int, b:Int) = (layerId, layerId)
                 
                 // set direction and point from center
@@ -158,13 +147,20 @@ public class HoneycombView: UIView{
     public func animate(#duration: Double, delay: Double){
         for honeycombView in subviews {
             if honeycombView is HoneycombImageView {
-                (honeycombView as! HoneycombImageView).animate(duration: duration, delay:delay)
+                (honeycombView as! HoneycombImageView).animate(duration: duration, animateType:animateType)
             }
         }
     }
 }
 
+// MARK: - HoneycombImageView
 public class HoneycombImageView: UIImageView {
+    
+    var color: UIColor =  UIColor.orangeColor(){
+        didSet {
+            backgroundColor = color
+        }
+    }
     
     public required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -172,12 +168,9 @@ public class HoneycombImageView: UIImageView {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = UIColor.darkGrayColor()
         setupHexagonView()
     }
     
-    // MARK: - setup layout
     public func setupHexagonView(){
         let maskLayer = CAShapeLayer()
         maskLayer.fillRule = kCAFillRuleEvenOdd
@@ -186,6 +179,7 @@ public class HoneycombImageView: UIImageView {
         let width:CGFloat = frame.size.width
         let height:CGFloat = frame.size.height
         
+        // set hexagon using bezierpath
         UIGraphicsBeginImageContext(frame.size)
         let path = UIBezierPath()
         path.moveToPoint(CGPointMake(width/2, 0))
@@ -202,24 +196,90 @@ public class HoneycombImageView: UIImageView {
     }
     
     
-    // MARK:- animate
+    // animate
     public func animate(animateType: HoneycombAnimateType = .FadeIn){
         animate(duration:2.0)
     }
     
     public func animate(#duration: Double, animateType: HoneycombAnimateType = .FadeIn){
-        animate(duration:2.0, delay:2.0)
-    }
-    
-    public func animate(#duration: Double, delay: Double, animateType: HoneycombAnimateType = .FadeIn){
+        let delay = (Double(rand() % 100) / 100.0)
+        
         switch animateType{
         case .FadeIn :
             alpha = 0.0
-            let delay = (Double(rand() % 100) / 100.0) + delay
             UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 self.alpha = 1.0
                 }, completion: { animateFinish in
             })
+       }
+    }
+}
+
+// MARK: - extension UIImageView
+public extension UIImageView {
+    func imageFromURL(url: String, placeholder: UIImage, shouldCacheImage:Bool = true, fadeIn: Bool = true) {
+        self.image = UIImage.imageFromURL(url, placeholder: placeholder, shouldCacheImage: true) {
+            (image: UIImage?) in
+            if image == nil {
+                return
+            }
+            if fadeIn {
+                self.alpha = 0.0
+                let duration = 1.0
+                let delay = (Double(rand() % 100) / 100.0)
+                UIView.animateWithDuration(duration, delay: delay, options: nil, animations: {
+                    self.alpha = 1.0
+                    }, completion: { animateFinish in
+                })
+            }
+            self.image = image
         }
+    }
+}
+
+// MARK: - extension UIImage
+public extension UIImage {
+    
+    private class func sharedHoneycombCache() -> NSCache! {
+        struct StaticSharedHoneycombCache {
+            static var sharedCache: NSCache? = nil
+            static var onceToken: dispatch_once_t = 0
+        }
+        dispatch_once(&StaticSharedHoneycombCache.onceToken) {
+            StaticSharedHoneycombCache.sharedCache = NSCache()
+        }
+        return StaticSharedHoneycombCache.sharedCache!
+    }
+    
+    class func imageFromURL(url: String, placeholder: UIImage, shouldCacheImage: Bool = true, closure: (image: UIImage?) -> ()) -> UIImage? {
+        // From Cache
+        if shouldCacheImage {
+            if UIImage.sharedHoneycombCache().objectForKey(url) != nil {
+                closure(image: UIImage.sharedHoneycombCache().objectForKey(url) as? UIImage)
+                return UIImage.sharedHoneycombCache().objectForKey(url) as! UIImage!
+            }
+        }
+        // Fetch Image
+        let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+        if let nsURL = NSURL(string: url) {
+            session.dataTaskWithURL(nsURL, completionHandler: {
+                (response: NSData!, data: NSURLResponse!, error: NSError!) in
+                if error != nil {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        closure(image: placeholder)
+                    }
+                }
+                if let image = UIImage(data: response) {
+                    if shouldCacheImage {
+                        UIImage.sharedHoneycombCache().setObject(image, forKey: url)
+                    }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        closure(image: image)
+                    }
+                }
+                session.finishTasksAndInvalidate()
+            }).resume()
+        }
+        return placeholder
     }
 }
