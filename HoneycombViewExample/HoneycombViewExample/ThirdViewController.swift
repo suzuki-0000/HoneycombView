@@ -32,7 +32,7 @@ class ThirdViewController: UIViewController {
         }
         
         let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
-        honeycombView.diameter = 150.0
+        honeycombView.diameter = 200.0
         honeycombView.margin = 0.0
         honeycombView.configrationForHoneycombViewWithURL(users.map{ $0.profileImageURL })
         view.addSubview(honeycombView)

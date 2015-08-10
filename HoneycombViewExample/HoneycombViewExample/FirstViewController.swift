@@ -15,7 +15,7 @@ class FirstViewController: UIViewController {
         super.viewDidLoad()
         
         let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
-        honeycombView.diameter = 90.0
+        honeycombView.diameter = 60.0
         honeycombView.margin = 1.0
         honeycombView.honeycombBackgroundColor = UIColor.orangeColor()
         honeycombView.configrationForHoneycombView()
