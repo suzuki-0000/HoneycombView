@@ -2,7 +2,7 @@
 //  HoneycombViewExampleTests.swift
 //  HoneycombViewExampleTests
 //
-//  Created bysuzuki_keishi on 2015/07/22.
+//  Created by suzuki_keishi on 2015/07/22.
 //  Copyright (c) 2015年 suzuki_keishi. All rights reserved.
 //
 

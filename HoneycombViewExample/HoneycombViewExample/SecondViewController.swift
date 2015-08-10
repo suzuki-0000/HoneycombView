@@ -2,8 +2,8 @@
 //  SecondViewController.swift
 //  HoneycombView
 //
-//  Created bysuzuki_keishi on 7/1/15.
-//  Copyright (c) 2015suzuki_keishi. All rights reserved.
+//  Created by suzuki_keishi on 7/1/15.
+//  Copyright (c) 2015 suzuki_keishi. All rights reserved.
 //
 
 import UIKit
