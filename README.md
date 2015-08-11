@@ -1,6 +1,7 @@
 HoneycombView
 ========================
 
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/HoneycombView.svg?style=flat)](http://cocoadocs.org/docsets/HoneycombView)
 [![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
 )](https://developer.apple.com/iphone/index.action)
@@ -28,7 +29,11 @@ use_frameworks!
 ```
 
 ####Carthage
-TODO
+To integrate HoneycombView into your Xcode project using Carthage, specify it in your Cartfile:
+
+```ogdl
+github "suzuki-0000/HoneycombView"
+```
 
 ####Manually
 Add the `HoneycombView.swift` directly into your project.
