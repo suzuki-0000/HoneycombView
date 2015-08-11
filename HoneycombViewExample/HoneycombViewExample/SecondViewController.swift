@@ -27,6 +27,6 @@ class SecondViewController: UIViewController {
         honeycombView.configrationForHoneycombViewWithImages(images)
         view.addSubview(honeycombView)
         
-        honeycombView.animate(duration: 0.5)
+        honeycombView.animate(duration: 2.0)
     }
 }

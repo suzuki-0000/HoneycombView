@@ -26,13 +26,16 @@ If you want to know more details, see the ViewController of the example project.
 
 - With Images
 ```swift
+  // do some for images
+  let images = [UIImage]()
+
   let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
   honeycombView.diameter = 160.0
   honeycombView.margin = 1.0
   honeycombView.configrationForHoneycombViewWithImages(images)
   view.addSubview(honeycombView)
         
-  honeycombView.animate(duration: 0.5)
+  honeycombView.animate(duration: 2.0)
 ```
 
 You can also use from URL(String) with NSCache.
