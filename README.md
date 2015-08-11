@@ -1,6 +1,7 @@
 HoneycombView
 ========================
 
+[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/HoneycombView.svg?style=flat)](http://cocoadocs.org/docsets/HoneycombView)
 [![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
 )](https://developer.apple.com/iphone/index.action)
 [![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat
@@ -18,7 +19,19 @@ iOS UIView for Honeycomb layout.
 - ARC
 
 ##Installation
+
+####CocoaPods
+HoneycombView is available on CocoaPods. Just add the following to your project Podfile:
+```
+pod 'HoneycombView'
+use_frameworks!
+```
+
+####Carthage
 TODO
+
+####Manually
+Add the `HoneycombView.swift` directly into your project.
 
 ##Usage
 The easiest way is to instantiate its class in ViewController, configure it, and add it to a view.
