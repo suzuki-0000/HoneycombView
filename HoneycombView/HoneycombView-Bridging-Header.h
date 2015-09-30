@@ -1,15 +1,6 @@
 //
-//  HoneycombView-Bridging-Header.h
-//  HoneycombView
-//
-//  Created by suzuki_keishi on 2015/09/29.
-//  Copyright © 2015 suzuki_keishi. All rights reserved.
+//  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#ifndef HoneycombView_Bridging_Header_h
-#define HoneycombView_Bridging_Header_h
 
-#import <IDMPhotoBrowser.h>
-#import <AFNetworking.h>
-
-#endif /* HoneycombView_Bridging_Header_h */
+#import "IDMPhotoBrowser.h"
