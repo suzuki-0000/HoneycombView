@@ -333,28 +333,29 @@ public class HoneycombImageView: UIImageView {
 }
 
 // MARK: - HoneycombPhotoBrowser
-public class HoneycombPhotoBrowser: UIViewController{
+public class HoneycombTableViewCell: UITableViewCell{
     
-    var photos:[String]!
+    var honeycombView:HoneycombView!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        honeycombView = HoneycombView(frame: CGRectMake(0, 0, frame.width, frame.height))
+        honeycombView.diameter = 200.0
+        honeycombView.margin = 0.0
+        addSubview(honeycombView)
     }
     
-    public init(coder aDecoder: NSCoder, photos:[String]) {
-        super.init(coder: aDecoder)!
-        
-        self.photos = photos
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        honeycombView = HoneycombView(frame: CGRectMake(0, 0, frame.width, frame.height))
+        honeycombView.diameter = 200.0
+        honeycombView.margin = 0.0
     }
     
-    // MARK: - pangesture
-    public func panGestureRecognized(sender:UIButton){
-        
+    public override func prepareForReuse() {
+        super.prepareForReuse()
     }
-
-    
 }
-
 
 // MARK: - extension UIImageView
 public extension UIImageView {

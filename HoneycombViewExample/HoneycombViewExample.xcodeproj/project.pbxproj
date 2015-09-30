@@ -12,7 +12,6 @@
 		8976D2E81B5F4E570016408F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8976D2E61B5F4E570016408F /* LaunchScreen.xib */; };
 		8976D2F41B5F4E580016408F /* HoneycombViewExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2F31B5F4E580016408F /* HoneycombViewExampleTests.swift */; };
 		8976D3011B5F4E740016408F /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2FE1B5F4E740016408F /* FirstViewController.swift */; };
-		8976D3021B5F4E740016408F /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2FF1B5F4E740016408F /* SecondViewController.swift */; };
 		8976D3051B5F4E8B0016408F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8976D3041B5F4E8B0016408F /* Main.storyboard */; };
 		897959AB1BBA9B5700781508 /* HoneycombView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897959AA1BBA9B5700781508 /* HoneycombView.swift */; settings = {ASSET_TAGS = (); }; };
 		89AC9DF51B5F80BE0072EA65 /* image0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89AC9DEA1B5F80BE0072EA65 /* image0.jpg */; };
@@ -89,7 +88,6 @@
 		8976D2F21B5F4E580016408F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8976D2F31B5F4E580016408F /* HoneycombViewExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoneycombViewExampleTests.swift; sourceTree = "<group>"; };
 		8976D2FE1B5F4E740016408F /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		8976D2FF1B5F4E740016408F /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		8976D3041B5F4E8B0016408F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		897959AA1BBA9B5700781508 /* HoneycombView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombView.swift; sourceTree = "<group>"; };
 		89AC9DEA1B5F80BE0072EA65 /* image0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image0.jpg; sourceTree = "<group>"; };
@@ -252,7 +250,6 @@
 			isa = PBXGroup;
 			children = (
 				8976D2FE1B5F4E740016408F /* FirstViewController.swift */,
-				8976D2FF1B5F4E740016408F /* SecondViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -509,7 +506,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				89D1416F1BBBC307008044EC /* IDMZoomingScrollView.m in Sources */,
-				8976D3021B5F4E740016408F /* SecondViewController.swift in Sources */,
 				89ED47BA1BBBC641002C56A7 /* POPPropertyAnimation.mm in Sources */,
 				89D1416E1BBBC307008044EC /* IDMTapDetectingView.m in Sources */,
 				89ED47B21BBBC641002C56A7 /* POPAnimator.mm in Sources */,
