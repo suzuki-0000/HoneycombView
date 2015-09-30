@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import IDMPhotoBrowser
 
 public enum HoneycombAnimateType { case FadeIn }
 
@@ -332,6 +331,30 @@ public class HoneycombImageView: UIImageView {
     }
 
 }
+
+// MARK: - HoneycombPhotoBrowser
+public class HoneycombPhotoBrowser: UIViewController{
+    
+    var photos:[String]!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public init(coder aDecoder: NSCoder, photos:[String]) {
+        super.init(coder: aDecoder)!
+        
+        self.photos = photos
+    }
+    
+    // MARK: - pangesture
+    public func panGestureRecognized(sender:UIButton){
+        
+    }
+
+    
+}
+
 
 // MARK: - extension UIImageView
 public extension UIImageView {

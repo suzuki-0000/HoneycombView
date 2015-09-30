@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import IDMPhotoBrowser
 
 struct User {
     var id:Int!
