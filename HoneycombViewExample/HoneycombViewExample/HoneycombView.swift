@@ -58,8 +58,6 @@ public class HoneycombView: UIView{
     }
     
     public func configrationForHoneycombViewWithURL(urls:[String], placeholder:UIImage? = nil){
-        self.images = createImageFromUrl(urls)
-        
         let structure = constructView()
         
         for (index, point)in structure.enumerate(){
@@ -103,16 +101,6 @@ public class HoneycombView: UIView{
             
             idmPhotos.append(IDMPhoto(image: result))
         }
-        return idmPhotos
-    }
-    
-    private func createImageFromUrl(urls:[String]) -> [IDMPhoto]{
-        var idmPhotos = [IDMPhoto]()
-        
-        for url in urls {
-            idmPhotos.append(IDMPhoto(URL: NSURL(string: url)))
-        }
-        
         return idmPhotos
     }
     
@@ -253,8 +241,6 @@ public class HoneycombChildView: UIButton{
     }
     
     func imageTapped(sender: UIButton){
-        animateTouched()
-       
         if let sv = superview as? HoneycombView{
             let browser = IDMPhotoBrowser(photos: sv.images, animatedFromView: sender)
             browser!.leftArrowImage = UIImage(named: "IDMPhotoBrowser_arrowLeft")
@@ -277,20 +263,37 @@ public class HoneycombChildView: UIButton{
     }
     
     func setHoneycombImageFromURL(url:String){
-        honeycombImageView.imageFromURL(url, placeholder: UIImage())
-    }
-    
-    // animate
-    func animateTouched() {
-        let animation = CAKeyframeAnimation()
-        animation.keyPath = "transform.scale"
-        animation.values = [0, -0.1, 0, 0.1, 0]
-        animation.keyTimes = [0, 0.2, 0.4, 0.6, 0.8, 1]
-        animation.duration = CFTimeInterval(0.3)
-        animation.additive = true
-        animation.repeatCount = 1
-        animation.beginTime = CACurrentMediaTime()
-        layer.addAnimation(animation, forKey: "pop")
+        honeycombImageView.imageFromURL(url, placeholder: UIImage()){[weak self] image in
+            if let _self = self {
+                if let sv = _self.superview as? HoneycombView{
+                    let imageView = UIImageView(image: image)
+                    // set hexagon using bezierpath
+                    let width:CGFloat = imageView.frame.size.width
+                    let height:CGFloat = imageView.frame.size.height
+                    
+                    UIGraphicsBeginImageContext(imageView.frame.size)
+                    let path = UIBezierPath()
+                    path.moveToPoint(CGPointMake(width/2, 0))
+                    path.addLineToPoint(CGPointMake(width, height / 4))
+                    path.addLineToPoint(CGPointMake(width, height * 3 / 4))
+                    path.addLineToPoint(CGPointMake(width / 2, height))
+                    path.addLineToPoint(CGPointMake(0, height * 3 / 4))
+                    path.addLineToPoint(CGPointMake(0, height / 4))
+                    path.closePath()
+                    path.fill()
+                    
+                    let maskLayer = CAShapeLayer()
+                    maskLayer.path = path.CGPath
+                    imageView.layer.mask = maskLayer
+                    imageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+                    
+                    let result = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    
+                    sv.images.append(IDMPhoto(image: result))
+                }
+            }
+        }
     }
     
     public func animate(animateType: HoneycombAnimateType = .FadeIn){
@@ -332,7 +335,7 @@ public class HoneycombImageView: UIImageView {
 
 // MARK: - extension UIImageView
 public extension UIImageView {
-    func imageFromURL(url: String, placeholder: UIImage, shouldCacheImage:Bool = true, fadeIn: Bool = true) {
+    func imageFromURL(url: String, placeholder: UIImage, shouldCacheImage:Bool = true, fadeIn: Bool = true, callback:(UIImage)->()) {
         self.image = UIImage.imageFromURL(url, placeholder: placeholder, shouldCacheImage: true) {
             (image: UIImage?) in
             if image == nil {
@@ -348,6 +351,7 @@ public extension UIImageView {
                 })
             }
             self.image = image
+            callback(image!)
         }
     }
 }
