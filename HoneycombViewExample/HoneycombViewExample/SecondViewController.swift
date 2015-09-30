@@ -7,26 +7,34 @@
 //
 
 import UIKit
-import HoneycombView
+import IDMPhotoBrowser
+
+struct User {
+    var id:Int!
+    var profileImageURL:String!
+    
+    init(id:Int = 0, profileImageURL:String = "image"){
+        self.id = id
+        self.profileImageURL = profileImageURL
+    }
+}
 
 class SecondViewController: UIViewController {
     
-    var images = [UIImage]()
+    var users = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for i in 0..<50{
-            images.append(UIImage(named: "image\(i%10).jpg")!)
+        for i in 0..<30{
+            let user = User(id: i, profileImageURL: "https://placeimg.com/100/100/any")
+            users.append(user)
         }
         
         let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
-        honeycombView.center = CGPointMake(view.frame.width/2, view.frame.height/2)
-        honeycombView.diameter = 160.0
-        honeycombView.margin = 1.0
-        honeycombView.configrationForHoneycombViewWithImages(images)
+        honeycombView.diameter = 200.0
+        honeycombView.margin = 0.0
+        honeycombView.configrationForHoneycombViewWithURL(users.map{ $0.profileImageURL })
         view.addSubview(honeycombView)
-        
-        honeycombView.animate(duration: 2.0)
     }
 }

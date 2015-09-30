@@ -7,21 +7,26 @@
 //
 
 import UIKit
-import HoneycombView
 
 class FirstViewController: UIViewController {
+    
+    var images = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        for i in 0..<50{
+            images.append(UIImage(named: "image\(i%10).jpg")!)
+        }
+        
         let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
-        honeycombView.diameter = 60.0
+        honeycombView.center = CGPointMake(view.frame.width/2, view.frame.height/2)
+        honeycombView.diameter = 160.0
         honeycombView.margin = 1.0
-        honeycombView.honeycombBackgroundColor = UIColor.orangeColor()
-        honeycombView.configrationForHoneycombView()
+        honeycombView.configrationForHoneycombViewWithImages(images)
         view.addSubview(honeycombView)
         
-        honeycombView.animate(duration: 2.0)
+        honeycombView.animate(2.0)
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IDMPhotoBrowser
 
 public enum HoneycombAnimateType { case FadeIn }
 
@@ -19,7 +20,7 @@ public class HoneycombView: UIView{
     public var margin:CGFloat = 10
     public var honeycombBackgroundColor = UIColor.blackColor()
     public var shouldCacheImage = false
-    public var images = [UIImage]()
+    public var images = [IDMPhoto]()
     public var urls = [String]()
     
     public required init?(coder aDecoder: NSCoder) {
@@ -40,34 +41,79 @@ public class HoneycombView: UIView{
     }
     
     public func configrationForHoneycombViewWithImages(images:[UIImage]){
-        self.images = images
+        self.images = resizeImage(images)
         
         let structure = constructView()
         
         for (index, point)in structure.enumerate(){
             let v = initializeHoneyCombChildView(point)
+            v.tag = index
             
             // set image if images have
-            if images.count > index {
-                v.setHoneycombImage(images[index])
+            if self.images.count > index {
+                v.setHoneycombImage(self.images[index])
             }
             addSubview(v)
         }
     }
     
     public func configrationForHoneycombViewWithURL(urls:[String], placeholder:UIImage? = nil){
-        self.urls = urls
+        self.images = createImageFromUrl(urls)
         
         let structure = constructView()
         
         for (index, point)in structure.enumerate(){
             let v = initializeHoneyCombChildView(point)
+            v.tag = index
             
             if urls.count > index {
                 v.setHoneycombImageFromURL(urls[index])
             }
             addSubview(v)
         }
+    }
+    
+    private func resizeImage(images:[UIImage]) -> [IDMPhoto]{
+        var idmPhotos = [IDMPhoto]()
+        
+        for image in images {
+            let imageView = UIImageView(image: image)
+            // set hexagon using bezierpath
+            let width:CGFloat = imageView.frame.size.width
+            let height:CGFloat = imageView.frame.size.height
+            
+            UIGraphicsBeginImageContext(imageView.frame.size)
+            let path = UIBezierPath()
+            path.moveToPoint(CGPointMake(width/2, 0))
+            path.addLineToPoint(CGPointMake(width, height / 4))
+            path.addLineToPoint(CGPointMake(width, height * 3 / 4))
+            path.addLineToPoint(CGPointMake(width / 2, height))
+            path.addLineToPoint(CGPointMake(0, height * 3 / 4))
+            path.addLineToPoint(CGPointMake(0, height / 4))
+            path.closePath()
+            path.fill()
+            
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = path.CGPath
+            imageView.layer.mask = maskLayer
+            imageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+            
+            let result = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            idmPhotos.append(IDMPhoto(image: result))
+        }
+        return idmPhotos
+    }
+    
+    private func createImageFromUrl(urls:[String]) -> [IDMPhoto]{
+        var idmPhotos = [IDMPhoto]()
+        
+        for url in urls {
+            idmPhotos.append(IDMPhoto(URL: NSURL(string: url)))
+        }
+        
+        return idmPhotos
     }
     
     private func initializeHoneyCombChildView(point:CGPoint) -> HoneycombChildView{
@@ -210,12 +256,15 @@ public class HoneycombChildView: UIButton{
         animateTouched()
        
         if let sv = superview as? HoneycombView{
-            debugPrint(sv)
             let browser = IDMPhotoBrowser(photos: sv.images, animatedFromView: sender)
-            browser.displayActionButton = true
-            browser.displayArrowButton = true
-            browser.displayCounterLabel = true
-            browser.usePopAnimation = true
+            browser!.leftArrowImage = UIImage(named: "IDMPhotoBrowser_arrowLeft")
+            browser!.rightArrowImage = UIImage(named: "IDMPhotoBrowser_arrowRight")
+            browser!.displayActionButton = true
+            browser!.displayArrowButton = true
+            browser!.displayCounterLabel = true
+            browser!.usePopAnimation = true
+            browser!.scaleImage = sender.currentImage
+            browser!.setInitialPageIndex(UInt(sender.tag))
             
             if let vc = UIApplication.sharedApplication().keyWindow?.rootViewController{
                 vc.presentViewController(browser, animated: true, completion: {})
@@ -223,8 +272,8 @@ public class HoneycombChildView: UIButton{
         }
     }
     
-    func setHoneycombImage(image:UIImage){
-        honeycombImageView.image = image
+    func setHoneycombImage(image:IDMPhoto){
+        honeycombImageView.image = image.underlyingImage()
     }
     
     func setHoneycombImageFromURL(url:String){
@@ -278,6 +327,7 @@ public class HoneycombImageView: UIImageView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
     }
+
 }
 
 // MARK: - extension UIImageView

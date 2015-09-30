@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8976D2B51B5F3CBC0016408F /* HoneycombView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8976D2B41B5F3CBC0016408F /* HoneycombView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8976D2BB1B5F3CBC0016408F /* HoneycombView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8976D2AF1B5F3CBC0016408F /* HoneycombView.framework */; };
 		8976D2C21B5F3CBC0016408F /* HoneycombViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2C11B5F3CBC0016408F /* HoneycombViewTests.swift */; };
 		8976D2CE1B5F3CDD0016408F /* HoneycombView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2CC1B5F3CDD0016408F /* HoneycombView.swift */; };
+		89962E051BBA90D300FE0CD6 /* libPods.a in Headers */ = {isa = PBXBuildFile; fileRef = C722CC23578144740423BF5F /* libPods.a */; };
+		CC30D339181CC48A28192478 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C722CC23578144740423BF5F /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +25,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03841B9FB65EB24560395192 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		59948DC219AC631AA089C3BD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8976D2AF1B5F3CBC0016408F /* HoneycombView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HoneycombView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8976D2B31B5F3CBC0016408F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8976D2B41B5F3CBC0016408F /* HoneycombView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HoneycombView.h; sourceTree = "<group>"; };
@@ -31,6 +34,8 @@
 		8976D2C01B5F3CBC0016408F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8976D2C11B5F3CBC0016408F /* HoneycombViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoneycombViewTests.swift; sourceTree = "<group>"; };
 		8976D2CC1B5F3CDD0016408F /* HoneycombView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombView.swift; sourceTree = "<group>"; };
+		89962E061BBA913900FE0CD6 /* HoneycombView-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HoneycombView-Bridging-Header.h"; sourceTree = "<group>"; };
+		C722CC23578144740423BF5F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC30D339181CC48A28192478 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,12 +58,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		72B763A1038C33EEF89734DB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C722CC23578144740423BF5F /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8976D2A51B5F3CBC0016408F = {
 			isa = PBXGroup;
 			children = (
 				8976D2B11B5F3CBC0016408F /* HoneycombView */,
 				8976D2BE1B5F3CBC0016408F /* HoneycombViewTests */,
 				8976D2B01B5F3CBC0016408F /* Products */,
+				72B763A1038C33EEF89734DB /* Frameworks */,
+				B5FCFFBFB85A1562666231BD /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				8976D2B31B5F3CBC0016408F /* Info.plist */,
+				89962E061BBA913900FE0CD6 /* HoneycombView-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -105,6 +122,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B5FCFFBFB85A1562666231BD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				59948DC219AC631AA089C3BD /* Pods.debug.xcconfig */,
+				03841B9FB65EB24560395192 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -112,7 +138,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8976D2B51B5F3CBC0016408F /* HoneycombView.h in Headers */,
+				89962E051BBA90D300FE0CD6 /* libPods.a in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,10 +149,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8976D2C51B5F3CBC0016408F /* Build configuration list for PBXNativeTarget "HoneycombView" */;
 			buildPhases = (
+				DE845E39E1FA2EB9C7AA2F8D /* Check Pods Manifest.lock */,
 				8976D2AA1B5F3CBC0016408F /* Sources */,
 				8976D2AB1B5F3CBC0016408F /* Frameworks */,
 				8976D2AC1B5F3CBC0016408F /* Headers */,
 				8976D2AD1B5F3CBC0016408F /* Resources */,
+				62B986DD270CCC79C202AE6A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -161,6 +189,8 @@
 		8976D2A61B5F3CBC0016408F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = suzuki_keishi;
 				TargetAttributes = {
@@ -206,6 +236,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		62B986DD270CCC79C202AE6A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE845E39E1FA2EB9C7AA2F8D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8976D2AA1B5F3CBC0016408F /* Sources */ = {
@@ -326,6 +389,7 @@
 		};
 		8976D2C61B5F3CBC0016408F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 59948DC219AC631AA089C3BD /* Pods.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -337,12 +401,15 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT)/HoneycombView-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		8976D2C71B5F3CBC0016408F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03841B9FB65EB24560395192 /* Pods.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -354,6 +421,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT)/HoneycombView-Bridging-Header.h";
 			};
 			name = Release;
 		};
