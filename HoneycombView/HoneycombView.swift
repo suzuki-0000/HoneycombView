@@ -19,8 +19,7 @@ public class HoneycombView: UIView{
     public var margin:CGFloat = 10
     public var honeycombBackgroundColor = UIColor.blackColor()
     public var shouldCacheImage = false
-    public var images = [UIImage]()
-    public var urls = [String]()
+    public var images = [IDMPhoto]()
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -40,34 +39,43 @@ public class HoneycombView: UIView{
     }
     
     public func configrationForHoneycombViewWithImages(images:[UIImage]){
-        self.images = images
+        self.images = resizeImage(images)
         
         let structure = constructView()
         
         for (index, point)in structure.enumerate(){
             let v = initializeHoneyCombChildView(point)
+            v.tag = index
             
             // set image if images have
-            if images.count > index {
-                v.setHoneycombImage(images[index])
+            if self.images.count > index {
+                v.setHoneycombImage(self.images[index])
             }
             addSubview(v)
         }
     }
     
     public func configrationForHoneycombViewWithURL(urls:[String], placeholder:UIImage? = nil){
-        self.urls = urls
-        
         let structure = constructView()
         
         for (index, point)in structure.enumerate(){
             let v = initializeHoneyCombChildView(point)
+            v.tag = index
             
             if urls.count > index {
                 v.setHoneycombImageFromURL(urls[index])
             }
             addSubview(v)
         }
+    }
+    
+    private func resizeImage(images:[UIImage]) -> [IDMPhoto]{
+        var idmPhotos = [IDMPhoto]()
+        
+        for image in images {
+            idmPhotos.append(IDMPhoto(image: image.createHoneycombPhoto()))
+        }
+        return idmPhotos
     }
     
     private func initializeHoneyCombChildView(point:CGPoint) -> HoneycombChildView{
@@ -205,44 +213,7 @@ public class HoneycombChildView: UIButton{
         UIGraphicsEndImageContext()
         layer.mask = maskLayer
     }
-    
-    func imageTapped(sender: UIButton){
-        animateTouched()
-       
-        if let sv = superview as? HoneycombView{
-            debugPrint(sv)
-            let browser = IDMPhotoBrowser(photos: sv.images, animatedFromView: sender)
-            browser.displayActionButton = true
-            browser.displayArrowButton = true
-            browser.displayCounterLabel = true
-            browser.usePopAnimation = true
-            
-            if let vc = UIApplication.sharedApplication().keyWindow?.rootViewController{
-                vc.presentViewController(browser, animated: true, completion: {})
-            }
-        }
-    }
-    
-    func setHoneycombImage(image:UIImage){
-        honeycombImageView.image = image
-    }
-    
-    func setHoneycombImageFromURL(url:String){
-        honeycombImageView.imageFromURL(url, placeholder: UIImage())
-    }
-    
-    // animate
-    func animateTouched() {
-        let animation = CAKeyframeAnimation()
-        animation.keyPath = "transform.scale"
-        animation.values = [0, -0.1, 0, 0.1, 0]
-        animation.keyTimes = [0, 0.2, 0.4, 0.6, 0.8, 1]
-        animation.duration = CFTimeInterval(0.3)
-        animation.additive = true
-        animation.repeatCount = 1
-        animation.beginTime = CACurrentMediaTime()
-        layer.addAnimation(animation, forKey: "pop")
-    }
+
     
     public func animate(animateType: HoneycombAnimateType = .FadeIn){
         animate(duration:2.0)
@@ -258,6 +229,35 @@ public class HoneycombChildView: UIButton{
                 self.alpha = 1.0
                 }, completion: { animateFinish in
             })
+        }
+    }
+    
+    public func imageTapped(sender: UIButton){
+        if let sv = superview as? HoneycombView{
+            let browser = IDMPhotoBrowser(photos: sv.images, animatedFromView: sender)
+            browser.displayActionButton = true
+            browser.displayArrowButton = true
+            browser.displayCounterLabel = true
+            browser.usePopAnimation = true
+            browser.scaleImage = sender.currentImage
+            browser.setInitialPageIndex(UInt(sender.tag))
+            
+            if let vc = UIApplication.sharedApplication().keyWindow?.rootViewController{
+                vc.presentViewController(browser, animated: true, completion: {})
+            }
+        }
+    }
+    
+    // MARK: - private
+    func setHoneycombImage(image:IDMPhoto){
+        honeycombImageView.image = image.underlyingImage()
+    }
+    
+    func setHoneycombImageFromURL(url:String){
+        honeycombImageView.imageFromURL(url, placeholder: UIImage()){[weak self] image in
+            if let _self = self, let sv = _self.superview as? HoneycombView {
+                sv.images.append(IDMPhoto(image: image.createHoneycombPhoto()))
+            }
         }
     }
 }
@@ -278,11 +278,37 @@ public class HoneycombImageView: UIImageView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
     }
+
+}
+
+// MARK: - HoneycombPhotoBrowser
+public class HoneycombTableViewCell: UITableViewCell{
+    
+    var honeycombView:HoneycombView!
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        honeycombView = HoneycombView(frame: CGRectMake(0, 0, frame.width, frame.height))
+        honeycombView.diameter = 200.0
+        honeycombView.margin = 0.0
+        addSubview(honeycombView)
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        honeycombView = HoneycombView(frame: CGRectMake(0, 0, frame.width, frame.height))
+        honeycombView.diameter = 200.0
+        honeycombView.margin = 0.0
+    }
+    
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+    }
 }
 
 // MARK: - extension UIImageView
 public extension UIImageView {
-    func imageFromURL(url: String, placeholder: UIImage, shouldCacheImage:Bool = true, fadeIn: Bool = true) {
+    func imageFromURL(url: String, placeholder: UIImage, shouldCacheImage:Bool = true, fadeIn: Bool = true, callback:(UIImage)->()) {
         self.image = UIImage.imageFromURL(url, placeholder: placeholder, shouldCacheImage: true) {
             (image: UIImage?) in
             if image == nil {
@@ -298,6 +324,7 @@ public extension UIImageView {
                 })
             }
             self.image = image
+            callback(image!)
         }
     }
 }
@@ -314,6 +341,34 @@ public extension UIImage {
             StaticSharedHoneycombCache.sharedCache = NSCache()
         }
         return StaticSharedHoneycombCache.sharedCache!
+    }
+    
+    func createHoneycombPhoto() -> UIImage{
+        let imageView = UIImageView(image: self)
+        // set hexagon using bezierpath
+        let width:CGFloat = imageView.frame.size.width
+        let height:CGFloat = imageView.frame.size.height
+        
+        UIGraphicsBeginImageContext(imageView.frame.size)
+        let path = UIBezierPath()
+        path.moveToPoint(CGPointMake(width/2, 0))
+        path.addLineToPoint(CGPointMake(width, height / 4))
+        path.addLineToPoint(CGPointMake(width, height * 3 / 4))
+        path.addLineToPoint(CGPointMake(width / 2, height))
+        path.addLineToPoint(CGPointMake(0, height * 3 / 4))
+        path.addLineToPoint(CGPointMake(0, height / 4))
+        path.closePath()
+        path.fill()
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.CGPath
+        imageView.layer.mask = maskLayer
+        imageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return result
     }
     
     class func imageFromURL(url: String, placeholder: UIImage, shouldCacheImage: Bool = true, closure: (image: UIImage?) -> ()) -> UIImage? {

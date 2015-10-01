@@ -11,6 +11,7 @@ import UIKit
 class FirstViewController: UIViewController{
     
     var images = [UIImage]()
+    var users = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,7 @@ class FirstViewController: UIViewController{
         honeycombView.diameter = 200.0
         honeycombView.margin = 1.0
         honeycombView.configrationForHoneycombViewWithImages(images)
+        //honeycombView.configrationForHoneycombViewWithURL(users.map{ $0.profileImageURL })
         view.addSubview(honeycombView)
         
         honeycombView.animate(2.0)
@@ -31,4 +33,17 @@ class FirstViewController: UIViewController{
     }
 }
 
+//for i in 0..<30{
+//    let user = User(id: i, profileImageURL: "https://placehold.jp/150x150.png")
+//    users.append(user)
+//}
 
+struct User {
+    var id:Int!
+    var profileImageURL:String!
+    
+    init(id:Int = 0, profileImageURL:String = "image"){
+        self.id = id
+        self.profileImageURL = profileImageURL
+    }
+}
