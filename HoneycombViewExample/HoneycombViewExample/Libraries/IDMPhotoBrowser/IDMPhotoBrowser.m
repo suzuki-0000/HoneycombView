@@ -77,6 +77,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 
 // Private Properties
 @property (nonatomic, strong) UIActionSheet *actionsSheet;
+@property (nonatomic, strong) UIImageView *resizableImageView;
 @property (nonatomic, strong) UIActivityViewController *activityViewController;
 
 // Private Methods
@@ -390,20 +391,20 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     fadeView.backgroundColor = [UIColor clearColor];
     [_applicationWindow addSubview:fadeView];
     
-    UIImageView *resizableImageView = [[UIImageView alloc] initWithImage:imageFromView];
-    resizableImageView.frame = _senderViewOriginalFrame;
-    resizableImageView.clipsToBounds = YES;
-    resizableImageView.contentMode = UIViewContentModeScaleAspectFill;
-    resizableImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
-    [_applicationWindow addSubview:resizableImageView];
+    _resizableImageView = [[UIImageView alloc] initWithImage:imageFromView];
+    _resizableImageView.frame = _senderViewOriginalFrame;
+    _resizableImageView.clipsToBounds = YES;
+    _resizableImageView.contentMode = UIViewContentModeScaleAspectFill;
+    [_applicationWindow addSubview:_resizableImageView];
     _senderViewForAnimation.hidden = YES;
     
     void (^completion)() = ^() {
         self.view.alpha = 1.0f;
         _pagingScrollView.alpha = 1.0f;
-        resizableImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
+        _resizableImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
         [fadeView removeFromSuperview];
-        [resizableImageView removeFromSuperview];
+        
+        _resizableImageView.alpha = 0.0;
     };
     
     [UIView animateWithDuration:_animationDuration animations:^{
@@ -415,14 +416,14 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     
     if(_usePopAnimation)
     {
-        [self animateView:resizableImageView
+        [self animateView:_resizableImageView
                   toFrame:finalImageViewFrame
                completion:completion];
     }
     else
     {
         [UIView animateWithDuration:_animationDuration animations:^{
-            resizableImageView.layer.frame = finalImageViewFrame;
+            _resizableImageView.layer.frame = finalImageViewFrame;
         } completion:^(BOOL finished) {
             completion();
         }];
@@ -437,25 +438,20 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         imageFromView = [scrollView.photo placeholderImage];
     }
     
-    //imageFromView = [self rotateImageToCurrentOrientation:imageFromView];
-    
     CGRect screenBound = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenBound.size.width;
     CGFloat screenHeight = screenBound.size.height;
-    
-    float scaleFactor = imageFromView.size.width / screenWidth;
     
     UIView *fadeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
     fadeView.backgroundColor = self.useWhiteBackgroundColor ? [UIColor whiteColor] : [UIColor blackColor];
     fadeView.alpha = fadeAlpha;
     [_applicationWindow addSubview:fadeView];
     
-    UIImageView *resizableImageView = [[UIImageView alloc] initWithImage:imageFromView];
-    resizableImageView.frame = (imageFromView) ? CGRectMake(0, (screenHeight/2)-((imageFromView.size.height / scaleFactor)/2)+scrollView.frame.origin.y, screenWidth, imageFromView.size.height / scaleFactor) : CGRectZero;
-    resizableImageView.contentMode = UIViewContentModeScaleAspectFill;
-    resizableImageView.backgroundColor = [UIColor clearColor];
-    resizableImageView.clipsToBounds = YES;
-    [_applicationWindow addSubview:resizableImageView];
+    _resizableImageView.alpha = 1.0;
+    _resizableImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _resizableImageView.backgroundColor = [UIColor clearColor];
+    _resizableImageView.clipsToBounds = YES;
+    [_applicationWindow addSubview:_resizableImageView];
     self.view.hidden = YES;
     
     void (^completion)() = ^() {
@@ -464,7 +460,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         _scaleImage = nil;
         
         [fadeView removeFromSuperview];
-        [resizableImageView removeFromSuperview];
+        [_resizableImageView removeFromSuperview];
         
         [self prepareForClosePhotoBrowser];
         [self dismissPhotoBrowserAnimated:NO];
@@ -477,14 +473,14 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     
     if(_usePopAnimation)
     {
-        [self animateView:resizableImageView
+        [self animateView:_resizableImageView
                   toFrame:_senderViewOriginalFrame
                completion:completion];
     }
     else
     {
         [UIView animateWithDuration:_animationDuration animations:^{
-            resizableImageView.layer.frame = _senderViewOriginalFrame;
+            _resizableImageView.layer.frame = _senderViewOriginalFrame;
         } completion:^(BOOL finished) {
             completion();
         }];
@@ -531,8 +527,27 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 }
 
 - (UIImage*)getImageFromView:(UIView *)view {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, YES, 2);
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.fillRule = kCAFillRuleEvenOdd;
+    maskLayer.frame = view.bounds;
+    
+    CGFloat width = view.frame.size.width;
+    CGFloat height = view.frame.size.height;
+    
+    UIGraphicsBeginImageContext(view.frame.size);
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    [path moveToPoint:CGPointMake(width/2, 0)];
+    [path addLineToPoint:CGPointMake(width, height / 4)];
+    [path addLineToPoint:CGPointMake(width, height * 3 / 4)];
+    [path addLineToPoint:CGPointMake(width / 2, height)];
+    [path addLineToPoint:CGPointMake(0, height * 3 / 4)];
+    [path addLineToPoint:CGPointMake(0, height / 4)];
+    [path closePath];
+    [path fill];
+    maskLayer.path = path.CGPath;
+    view.layer.mask = maskLayer;
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;

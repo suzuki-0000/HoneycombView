@@ -19,7 +19,7 @@ class FirstViewController: UIViewController{
             images.append(UIImage(named: "image\(i%10).jpg")!)
         }
         
-        let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
+        let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height/1.5))
         honeycombView.center = CGPointMake(view.frame.width/2, view.frame.height/2)
         honeycombView.diameter = 200.0
         honeycombView.margin = 1.0
