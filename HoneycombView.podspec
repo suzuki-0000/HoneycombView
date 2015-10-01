@@ -10,6 +10,4 @@ Pod::Spec.new do |s|
   s.source_files = "HoneycombView/**/*.{h,swift}"
   s.requires_arc = true
   s.frameworks   = "UIKit"
-  s.dependency     'DACircularProgress'
-  s.dependency     'pop'
 end
