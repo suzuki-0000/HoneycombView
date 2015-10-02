@@ -19,8 +19,8 @@ public class HoneycombView: UIView{
     public var margin:CGFloat = 10
     public var honeycombBackgroundColor = UIColor.blackColor()
     public var shouldCacheImage = false
-//    public var images = [HoneycombPhoto]()
-    public var images = [IDMPhoto]()
+    public var images = [HoneycombPhoto]()
+//    public var images = [IDMPhoto]()
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -70,22 +70,22 @@ public class HoneycombView: UIView{
         }
     }
     
-//    private func resizeImage(images:[UIImage]) -> [HoneycombPhoto]{
-//        var photos = [HoneycombPhoto]()
-//        
-//        for image in images {
-//            photos.append(HoneycombPhoto(image: image.createHoneycombPhoto()))
-//        }
-//        return photos
-//    }
-    private func resizeImage(images:[UIImage]) -> [IDMPhoto]{
-        var idmPhotos = [IDMPhoto]()
+    private func resizeImage(images:[UIImage]) -> [HoneycombPhoto]{
+        var photos = [HoneycombPhoto]()
         
         for image in images {
-            idmPhotos.append(IDMPhoto(image: image.createHoneycombPhoto()))
+            photos.append(HoneycombPhoto(image: image.createHoneycombPhoto()))
         }
-        return idmPhotos
+        return photos
     }
+//    private func resizeImage(images:[UIImage]) -> [IDMPhoto]{
+//        var idmPhotos = [IDMPhoto]()
+//        
+//        for image in images {
+//            idmPhotos.append(IDMPhoto(image: image.createHoneycombPhoto()))
+//        }
+//        return idmPhotos
+//    }
     
     private func initializeHoneyCombChildView(point:CGPoint) -> HoneycombChildView{
         let v = HoneycombChildView(frame: CGRectMake(0, 0, diameter, diameter))
@@ -243,16 +243,16 @@ public class HoneycombChildView: UIButton{
     
     public func imageTapped(sender: UIButton){
         if let sv = superview as? HoneycombView{
-//            let browser = HoneycombPhotoBrowser(photos: sv.images, animatedFromView: sender)
-//            browser.initializePageIndex(sender.tag)
-            let browser = IDMPhotoBrowser(photos: sv.images, animatedFromView: sender)
-            browser.displayActionButton = true
-            browser.displayArrowButton = true
-            browser.displayCounterLabel = true
-            browser.usePopAnimation = true
-            browser.scaleImage = sender.currentImage
-            browser.setInitialPageIndex(UInt(sender.tag))
-           
+            let browser = HoneycombPhotoBrowser(photos: sv.images, animatedFromView: sender)
+            browser.initializePageIndex(sender.tag)
+//            let browser = IDMPhotoBrowser(photos: sv.images, animatedFromView: sender)
+//            browser.displayActionButton = true
+//            browser.displayArrowButton = true
+//            browser.displayCounterLabel = true
+//            browser.usePopAnimation = true
+//            browser.scaleImage = sender.currentImage
+//            browser.setInitialPageIndex(UInt(sender.tag))
+            
             
             if let vc = UIApplication.sharedApplication().keyWindow?.rootViewController{
                 vc.presentViewController(browser, animated: true, completion: {})
@@ -261,27 +261,27 @@ public class HoneycombChildView: UIButton{
     }
     
     // MARK: - private
-    func setHoneycombImage(image:IDMPhoto){
-        honeycombImageView.image = image.underlyingImage()
-    }
-    func setHoneycombImageFromURL(url:String){
-        honeycombImageView.imageFromURL(url, placeholder: UIImage()){[weak self] image in
-            if let _self = self, let sv = _self.superview as? HoneycombView {
-                sv.images.append(IDMPhoto(image: image.createHoneycombPhoto()))
-            }
-        }
-    }
-    
-//    func setHoneycombImage(image:HoneycombPhoto){
-//        honeycombImageView.image = image.getUnderlyingImage()
+//    func setHoneycombImage(image:IDMPhoto){
+//        honeycombImageView.image = image.underlyingImage()
 //    }
 //    func setHoneycombImageFromURL(url:String){
 //        honeycombImageView.imageFromURL(url, placeholder: UIImage()){[weak self] image in
 //            if let _self = self, let sv = _self.superview as? HoneycombView {
-//                sv.images.append(HoneycombPhoto(image: image.createHoneycombPhoto()))
+//                sv.images.append(IDMPhoto(image: image.createHoneycombPhoto()))
 //            }
 //        }
 //    }
+    
+    func setHoneycombImage(image:HoneycombPhoto){
+        honeycombImageView.image = image.getUnderlyingImage()
+    }
+    func setHoneycombImageFromURL(url:String){
+        honeycombImageView.imageFromURL(url, placeholder: UIImage()){[weak self] image in
+            if let _self = self, let sv = _self.superview as? HoneycombView {
+                sv.images.append(HoneycombPhoto(image: image.createHoneycombPhoto()))
+            }
+        }
+    }
 
 }
 

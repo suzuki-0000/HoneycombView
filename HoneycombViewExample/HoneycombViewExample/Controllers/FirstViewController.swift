@@ -20,6 +20,11 @@ class FirstViewController: UIViewController{
             images.append(UIImage(named: "image\(i%10).jpg")!)
         }
         
+        for i in 0..<30{
+            let user = User(id: i, profileImageURL: "https://placehold.jp/150x150.png")
+            users.append(user)
+        }
+        
         let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height/1.5))
         honeycombView.center = CGPointMake(view.frame.width/2, view.frame.height/2)
         honeycombView.diameter = 200.0
@@ -33,10 +38,6 @@ class FirstViewController: UIViewController{
     }
 }
 
-//for i in 0..<30{
-//    let user = User(id: i, profileImageURL: "https://placehold.jp/150x150.png")
-//    users.append(user)
-//}
 
 struct User {
     var id:Int!
