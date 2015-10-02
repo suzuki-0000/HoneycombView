@@ -300,7 +300,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     
     self.view.opaque = YES;
     
-    self.view.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor ? 1 : 0) alpha:newAlpha];
+   // self.view.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor ? 1 : 0) alpha:newAlpha];
     
     // Gesture Ended
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
@@ -414,7 +414,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     float scaleFactor = (imageFromView ? imageFromView.size.width : screenWidth) / screenWidth;
     CGRect finalImageViewFrame = CGRectMake(0, (screenHeight/2)-((imageFromView.size.height / scaleFactor)/2), screenWidth, imageFromView.size.height / scaleFactor);
     
-    if(_usePopAnimation)
+    if(!_usePopAnimation)
     {
         [self animateView:_resizableImageView
                   toFrame:finalImageViewFrame
@@ -578,9 +578,9 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     //_pagingScrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_pagingScrollView.pagingEnabled = YES;
 	_pagingScrollView.delegate = self;
-	_pagingScrollView.showsHorizontalScrollIndicator = NO;
-	_pagingScrollView.showsVerticalScrollIndicator = NO;
-	_pagingScrollView.backgroundColor = [UIColor clearColor];
+	_pagingScrollView.showsHorizontalScrollIndicator = YES;
+	_pagingScrollView.showsVerticalScrollIndicator = YES;
+	_pagingScrollView.backgroundColor = [UIColor whiteColor];
     _pagingScrollView.contentSize = [self contentSizeForPagingScrollView];
 	[self.view addSubview:_pagingScrollView];
     
@@ -757,18 +757,18 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 	CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
     
 	// Frame needs changing
-	_pagingScrollView.frame = pagingScrollViewFrame;
+//	_pagingScrollView.frame = pagingScrollViewFrame;
 	
 	// Recalculate contentSize based on current orientation
-	_pagingScrollView.contentSize = [self contentSizeForPagingScrollView];
+//	_pagingScrollView.contentSize = [self contentSizeForPagingScrollView];
 	
 	// Adjust frames and configuration of each visible page
-	for (IDMZoomingScrollView *page in _visiblePages) {
-        NSUInteger index = PAGE_INDEX(page);
-		page.frame = [self frameForPageAtIndex:index];
-        page.captionView.frame = [self frameForCaptionView:page.captionView atIndex:index];
-		[page setMaxMinZoomScalesForCurrentBounds];
-	}
+//	for (IDMZoomingScrollView *page in _visiblePages) {
+//        NSUInteger index = PAGE_INDEX(page);
+//		page.frame = [self frameForPageAtIndex:index];
+//        page.captionView.frame = [self frameForCaptionView:page.captionView atIndex:index];
+//		[page setMaxMinZoomScalesForCurrentBounds];
+//	}
 	
 	// Adjust contentOffset to preserve page location based on values collected prior to location
 	_pagingScrollView.contentOffset = [self contentOffsetForPageAtIndex:indexPriorToLayout];
@@ -846,7 +846,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 
 - (void)reloadData {
     // Get data
-    [self releaseAllUnderlyingPhotos];
+//    [self releaseAllUnderlyingPhotos];
     
     // Update
     [self performLayout];
@@ -856,6 +856,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 }
 
 - (NSUInteger)numberOfPhotos {
+    NSLog(@"%lu", (unsigned long)_photos.count);
     return _photos.count;
 }
 
@@ -879,6 +880,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 }
 
 - (UIImage *)imageForPhoto:(id<IDMPhoto>)photo {
+    NSLog(@"%@", [photo underlyingImage]);
 	if (photo) {
 		// Get image or obtain in background
 		if ([photo underlyingImage]) {
@@ -905,6 +907,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                 id <IDMPhoto> photo = [self photoAtIndex:pageIndex-1];
                 if (![photo underlyingImage]) {
                     [photo loadUnderlyingImageAndNotify];
+                    NSLog(@"Pre-loading image at index %lu", pageIndex-1);
                     IDMLog(@"Pre-loading image at index %i", pageIndex-1);
                 }
             }
@@ -913,6 +916,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
                 id <IDMPhoto> photo = [self photoAtIndex:pageIndex+1];
                 if (![photo underlyingImage]) {
                     [photo loadUnderlyingImageAndNotify];
+                    NSLog(@"Pre-loading image at index %lu", pageIndex+1);
                     IDMLog(@"Pre-loading image at index %i", pageIndex+1);
                 }
             }
@@ -931,7 +935,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
             [page displayImage];
             [self loadAdjacentPhotosIfNecessary:photo];
         } else {
-            // Failed to load
+            // Failed to loaconfigurePaged
             [page displayImageFailure];
         }
     }
@@ -943,6 +947,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 	// Calculate which pages should be visible
 	// Ignore padding as paging bounces encroach on that
 	// and lead to false page loads
+    NSLog(@"hoeghoe");
 	CGRect visibleBounds = _pagingScrollView.bounds;
 	NSInteger iFirstIndex = (NSInteger) floorf((CGRectGetMinX(visibleBounds)+PADDING*2) / CGRectGetWidth(visibleBounds));
 	NSInteger iLastIndex  = (NSInteger) floorf((CGRectGetMaxX(visibleBounds)-PADDING*2-1) / CGRectGetWidth(visibleBounds));
@@ -950,21 +955,26 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     if (iFirstIndex > [self numberOfPhotos] - 1) iFirstIndex = [self numberOfPhotos] - 1;
     if (iLastIndex < 0) iLastIndex = 0;
     if (iLastIndex > [self numberOfPhotos] - 1) iLastIndex = [self numberOfPhotos] - 1;
+    
+    
+    NSLog(@"%lu", (unsigned long)[self numberOfPhotos]);
+    NSLog(@"%ld", (long)iFirstIndex);
+    NSLog(@"%ld", (long)iLastIndex);
 	
 	// Recycle no longer needed pages
-    NSInteger pageIndex;
-	for (IDMZoomingScrollView *page in _visiblePages) {
-        pageIndex = PAGE_INDEX(page);
-		if (pageIndex < (NSUInteger)iFirstIndex || pageIndex > (NSUInteger)iLastIndex) {
-			[_recycledPages addObject:page];
-            [page prepareForReuse];
-			[page removeFromSuperview];
-			IDMLog(@"Removed page at index %i", PAGE_INDEX(page));
-		}
-	}
-	[_visiblePages minusSet:_recycledPages];
-    while (_recycledPages.count > 2) // Only keep 2 recycled pages
-        [_recycledPages removeObject:[_recycledPages anyObject]];
+//    NSInteger pageIndex;
+//	for (IDMZoomingScrollView *page in _visiblePages) {
+//        pageIndex = PAGE_INDEX(page);
+//		if (pageIndex < (NSUInteger)iFirstIndex || pageIndex > (NSUInteger)iLastIndex) {
+//			[_recycledPages addObject:page];
+//            [page prepareForReuse];
+//			[page removeFromSuperview];
+//			IDMLog(@"Removed page at index %i", PAGE_INDEX(page));
+//		}
+//	}
+//	[_visiblePages minusSet:_recycledPages];
+//    while (_recycledPages.count > 2) // Only keep 2 recycled pages
+//        [_recycledPages removeObject:[_recycledPages anyObject]];
 	
 	// Add missing pages
 	for (NSUInteger index = (NSUInteger)iFirstIndex; index <= (NSUInteger)iLastIndex; index++) {
@@ -972,8 +982,6 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
             // Add new page
 			IDMZoomingScrollView *page;
             page = [[IDMZoomingScrollView alloc] initWithPhotoBrowser:self];
-            page.backgroundColor = [UIColor clearColor];
-            page.opaque = YES;
             
 			[self configurePage:page forIndex:index];
 			[_visiblePages addObject:page];
@@ -981,23 +989,28 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 			IDMLog(@"Added page at index %i", index);
             
             // Add caption
-            IDMCaptionView *captionView = [self captionViewForPhotoAtIndex:index];
-            captionView.frame = [self frameForCaptionView:captionView atIndex:index];
-            [_pagingScrollView addSubview:captionView];
-            page.captionView = captionView;
+//            IDMCaptionView *captionView = [self captionViewForPhotoAtIndex:index];
+//            captionView.frame = [self frameForCaptionView:captionView atIndex:index];
+//            [_pagingScrollView addSubview:captionView];
+//            page.captionView = captionView;
 		}
 	}
 }
 
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index {
-	for (IDMZoomingScrollView *page in _visiblePages)
-		if (PAGE_INDEX(page) == index) return YES;
+    for (IDMZoomingScrollView *page in _visiblePages){
+        NSLog(@"%lu", page.tag);
+        if (PAGE_INDEX(page) == index){
+        return YES;
+        }
+    }
 	return NO;
 }
 
 - (IDMZoomingScrollView *)pageDisplayedAtIndex:(NSUInteger)index {
 	IDMZoomingScrollView *thePage = nil;
 	for (IDMZoomingScrollView *page in _visiblePages) {
+        NSLog(@"%lu", page.tag);
 		if (PAGE_INDEX(page) == index) {
 			thePage = page; break;
 		}
@@ -1009,7 +1022,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 	IDMZoomingScrollView *thePage = nil;
 	for (IDMZoomingScrollView *page in _visiblePages) {
 		if (page.photo == photo) {
-			thePage = page; break;
+			//thePage = page; break;
 		}
 	}
 	return thePage;
@@ -1018,6 +1031,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 - (void)configurePage:(IDMZoomingScrollView *)page forIndex:(NSUInteger)index {
 	page.frame = [self frameForPageAtIndex:index];
     page.tag = PAGE_INDEX_TAG_OFFSET + index;
+    NSLog(@"%ld", (long)page.tag);
     page.photo = [self photoAtIndex:index];
     
     __block __weak IDMPhoto *photo = (IDMPhoto*)page.photo;

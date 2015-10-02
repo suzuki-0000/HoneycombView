@@ -36,6 +36,7 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
 	NSUInteger tapCount = touch.tapCount;
+    NSLog(@"touche end");
 	switch (tapCount) {
 		case 1:
 			[self handleSingleTap:touch];

@@ -122,7 +122,7 @@
 			photoImageViewFrame.size = img.size;
             
 			_photoImageView.frame = photoImageViewFrame;
-            _photoImageView.frame = CGRectMake(0, 0, MIN(photoImageViewFrame.size.width, photoImageViewFrame.size.height), MIN(photoImageViewFrame.size.width, photoImageViewFrame.size.height));
+            //_photoImageView.frame = CGRectMake(0, 0, MIN(photoImageViewFrame.size.width, photoImageViewFrame.size.height), MIN(photoImageViewFrame.size.width, photoImageViewFrame.size.height));
 			self.contentSize = photoImageViewFrame.size;
 
 			// Set zoom to minimum zoom
@@ -228,9 +228,15 @@
         frameToCenter.origin.y = 0;
 	}
     
+        NSLog(@"%@",NSStringFromCGRect(_photoImageView.frame));
+        NSLog(@"%@",NSStringFromCGRect(frameToCenter));
 	// Center
 	if (!CGRectEqualToRect(_photoImageView.frame, frameToCenter))
 		_photoImageView.frame = frameToCenter;
+    
+    NSLog(@"%@", _photoImageView.image);
+    NSLog(@"%@", _photoImageView.image);
+    
 }
 
 #pragma mark - UIScrollViewDelegate
