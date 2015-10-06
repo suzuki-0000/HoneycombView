@@ -108,8 +108,9 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         }
         
         // arrows:back
+        let bundle = NSBundle(identifier: "com.keishi.suzuki.HoneycombView")
         let previousBtn = UIButton(type: .Custom)
-        let previousImage = UIImage(named: "btn_common_back_wh")!
+        let previousImage = UIImage(named: "btn_common_back_wh", inBundle: bundle, compatibleWithTraitCollection: nil)!
         previousBtn.frame = CGRectMake(0, 0, 44, 44)
         previousBtn.imageEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25)
         previousBtn.setImage(previousImage, forState: .Normal)
@@ -119,7 +120,7 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         
         // arrows:next
         let nextBtn = UIButton(type: .Custom)
-        let nextImage = UIImage(named: "btn_common_forward_wh")!
+        let nextImage = UIImage(named: "btn_common_forward_wh", inBundle: bundle, compatibleWithTraitCollection: nil)!
         nextBtn.frame = CGRectMake(0, 0, 44, 44)
         nextBtn.imageEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25)
         nextBtn.setImage(nextImage, forState: .Normal)
@@ -138,8 +139,9 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
         
         // close
+        let doneImage = UIImage(named: "btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil)!
         doneButton = UIButton(type: UIButtonType.Custom)
-        doneButton.setImage(UIImage(named: "btn_common_close_wh"), forState: UIControlState.Normal)
+        doneButton.setImage(doneImage, forState: UIControlState.Normal)
         doneButton.frame = CGRectMake(5, 5, 44, 44)
         doneButton.imageEdgeInsets = UIEdgeInsetsMake(15.25, 15.25, 15.25, 15.25)
         doneButton.backgroundColor = UIColor.clearColor()

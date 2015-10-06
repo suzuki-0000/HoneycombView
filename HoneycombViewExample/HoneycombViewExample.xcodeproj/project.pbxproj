@@ -23,6 +23,8 @@
 		89AC9DFD1B5F80BE0072EA65 /* image8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89AC9DF21B5F80BE0072EA65 /* image8.jpg */; };
 		89AC9DFE1B5F80BE0072EA65 /* image9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89AC9DF31B5F80BE0072EA65 /* image9.jpg */; };
 		89AC9DFF1B5F80BE0072EA65 /* image10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89AC9DF41B5F80BE0072EA65 /* image10.jpg */; };
+		89F327DB1BC3AADB00DC6DAF /* HoneycombView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 899B8BA01BC3A36200B8F9C3 /* HoneycombView.framework */; };
+		89F327DC1BC3AADB00DC6DAF /* HoneycombView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 899B8BA01BC3A36200B8F9C3 /* HoneycombView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +49,28 @@
 			remoteGlobalIDString = 8976D2BA1B5F3CBC0016408F;
 			remoteInfo = HoneycombViewTests;
 		};
+		89F327DD1BC3AADB00DC6DAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 899B8B9A1BC3A36200B8F9C3 /* HoneycombView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8976D2AE1B5F3CBC0016408F;
+			remoteInfo = HoneycombView;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		89F327E01BC3AADB00DC6DAF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				89F327DC1BC3AADB00DC6DAF /* HoneycombView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8976D2D81B5F4E570016408F /* HoneycombViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoneycombViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +101,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89F327DF1BC3AADB00DC6DAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89F327DB1BC3AADB00DC6DAF /* HoneycombView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,10 +232,13 @@
 			buildPhases = (
 				8976D2D41B5F4E570016408F /* Sources */,
 				8976D2D61B5F4E570016408F /* Resources */,
+				89F327DF1BC3AADB00DC6DAF /* Frameworks */,
+				89F327E01BC3AADB00DC6DAF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				89F327DE1BC3AADB00DC6DAF /* PBXTargetDependency */,
 			);
 			name = HoneycombViewExample;
 			productName = HoneycombViewExample;
@@ -346,6 +380,11 @@
 			isa = PBXTargetDependency;
 			target = 8976D2D71B5F4E570016408F /* HoneycombViewExample */;
 			targetProxy = 8976D2EE1B5F4E580016408F /* PBXContainerItemProxy */;
+		};
+		89F327DE1BC3AADB00DC6DAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HoneycombView;
+			targetProxy = 89F327DD1BC3AADB00DC6DAF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
