@@ -11,7 +11,6 @@ import Foundation
 @objc protocol HoneycombDetectingImageViewDelegate {
     func handleSingleTap(view:UIView, touch: UITouch)
     func handleDoubleTap(view:UIView, touch: UITouch)
-    func handleTripleTap(view:UIView, touch: UITouch)
 }
 
 
@@ -26,7 +25,6 @@ class HoneycombDetectingImageView:UIImageView{
         switch touch.tapCount {
         case 1 : handleSingleTap(touch)
         case 2 : handleDoubleTap(touch)
-        case 3 : handleTripleTap(touch)
         default: break
         }
         nextResponder()
@@ -38,8 +36,4 @@ class HoneycombDetectingImageView:UIImageView{
     func handleDoubleTap(touch: UITouch) {
         delegate?.handleDoubleTap(self, touch: touch)
     }
-    func handleTripleTap(touch: UITouch) {
-        delegate?.handleTripleTap(self, touch: touch)
-    }
-    
 }

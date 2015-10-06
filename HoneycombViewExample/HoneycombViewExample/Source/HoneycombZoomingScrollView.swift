@@ -150,6 +150,7 @@ public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, Hone
         }
         setNeedsLayout()
     }
+
     
     // MARK: - UIScrollViewDelegate
     public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -178,11 +179,9 @@ public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, Hone
     func handleDoubleTap(view: UIView, touch: UITouch) {
     }
     
-    func handleTripleTap(view: UIView, touch: UITouch) {
-    }
-    
-    
     // MARK: - Tap Detection
+    
+    
     
     
     

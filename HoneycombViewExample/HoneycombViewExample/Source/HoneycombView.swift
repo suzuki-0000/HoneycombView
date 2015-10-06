@@ -273,8 +273,9 @@ public class HoneycombChildView: UIButton{
 //    }
     
     func setHoneycombImage(image:HoneycombPhoto){
-        honeycombImageView.image = image.getUnderlyingImage()
+        honeycombImageView.image = image.underlyingImage
     }
+    
     func setHoneycombImageFromURL(url:String){
         honeycombImageView.imageFromURL(url, placeholder: UIImage()){[weak self] image in
             if let _self = self, let sv = _self.superview as? HoneycombView {

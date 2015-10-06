@@ -13,16 +13,24 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
     
     final let pageIndexTagOffset = 1000
     
+    var applicationWindow:UIWindow!
+    var toolBar:UIToolbar!
+    var toolCounterLabel:UILabel!
+    var toolCounterButton:UIBarButtonItem!
+    var toolPreviousButton:UIBarButtonItem!
+    var toolNextButton:UIBarButtonItem!
     var pagingScrollView:UIScrollView!
     var panGesture:UIPanGestureRecognizer!
+    var doneButton:UIButton!
+    
     var visiblePages:Set<HoneycombZoomingScrollView> = Set()
     var recycledPages:Set<HoneycombZoomingScrollView> = Set()
     var initialPageIndex:Int = 0
     var currentPageIndex:Int = 0
+    var photos:[HoneycombPhoto] = [HoneycombPhoto]()
     var numberOfPhotos:Int{
         return photos.count
     }
-    var photos:[HoneycombPhoto] = [HoneycombPhoto]()
     
     // senderView's property
     var senderViewForAnimation:UIView = UIView()
@@ -36,12 +44,11 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
     var isViewActive:Bool = false
     var isPerformingLayout:Bool = false
     
-    var applicationWindow:UIWindow!
-    
-    var doneButton:UIButton!
-    
+    // scroll property
     var firstX:CGFloat = 0.0
     var firstY:CGFloat = 0.0
+    
+    var controlVisibilityTimer:NSTimer!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -95,6 +102,28 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
         view.addSubview(pagingScrollView)
         
+        // toolbar
+        toolBar = UIToolbar(frame: frameForToolbarAtOrientation())
+        toolBar.backgroundColor = UIColor.clearColor()
+        toolBar.clipsToBounds = true
+        toolBar.translucent = true
+        toolBar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
+        view.addSubview(toolBar)
+        
+        
+        // arrows
+        toolPreviousButton = UIBarButtonItem(image: UIImage(named: "btn_common_arrow_left"), style: .Plain, target: self, action: "gotoPreviousPage")
+        toolNextButton = UIBarButtonItem(image: UIImage(named: "btn_common_arrow_right"), style: .Plain, target: self, action: "gotoNextPage")
+        toolCounterLabel = UILabel(frame: CGRectMake(0, 0, 95, 40))
+        toolCounterLabel.textAlignment = .Center
+        toolCounterLabel.backgroundColor = UIColor.clearColor()
+        toolCounterLabel.font  = UIFont(name: "Helvetica", size: 16.0)
+        toolCounterLabel.textColor = UIColor.whiteColor()
+        toolCounterLabel.shadowColor = UIColor.darkTextColor()
+        toolCounterLabel.shadowOffset = CGSizeMake(0.0, 1.0)
+        
+        toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
+        
         // close
         doneButton = UIButton(type: UIButtonType.Custom)
         doneButton.setImage(UIImage(named: "btn_common_close_wh"), forState: UIControlState.Normal)
@@ -115,6 +144,13 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         performPresentAnimation()
     }
     
+    public func gotoPreviousPage(){
+        jumpToPageAtIndex(currentPageIndex - 1)
+    }
+    public func gotoNextPage(){
+        jumpToPageAtIndex(currentPageIndex + 1)
+    }
+    
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
@@ -130,6 +166,9 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
         didStartViewingPageAtIndex(currentPageIndex)
+        
+        toolBar.frame = frameForToolbarAtOrientation()
+        
         
         isPerformingLayout = false
     }
@@ -160,6 +199,19 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
     public func performLayout(){
         isPerformingLayout = true
         
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(toolPreviousButton)
+        items.append(flexSpace)
+        items.append(toolCounterButton)
+        items.append(flexSpace)
+        items.append(toolNextButton)
+        items.append(flexSpace)
+        toolBar.setItems(items, animated: false)
+        updateToolbar()
+        
         visiblePages.removeAll()
         recycledPages.removeAll()
         
@@ -171,6 +223,11 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         
         view.addGestureRecognizer(panGesture)
         
+    }
+    
+    public func prepareForClosePhotoBrowser(){
+        applicationWindow.removeGestureRecognizer(panGesture)
+        NSObject.cancelPreviousPerformRequestsWithTarget(self)
     }
     
     public func loadAdjacentPhotosIfNecessary(photo: HoneycombPhoto){
@@ -185,11 +242,23 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         }
     }
     
+    // MARK: - frame calculation
     public func frameForPagingScrollView() -> CGRect{
         var frame = view.bounds
         frame.origin.x -= 10
         frame.size.width += (2 * 10)
         return frame
+    }
+    
+    public func frameForToolbarAtOrientation() -> CGRect{
+        let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
+        var height:CGFloat = 44
+        
+        if UIInterfaceOrientationIsLandscape(currentOrientation){
+            height = 32
+        }
+        
+        return CGRectMake(0, view.bounds.size.height - height, view.bounds.size.width, height)
     }
     
     public func contentOffsetForPageAtIndex(index:Int) -> CGPoint{
@@ -203,7 +272,17 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         return CGSizeMake(bounds.size.width * CGFloat(numberOfPhotos), bounds.size.height)
     }
     
-    // MARK: - func
+    // MARK: - Toolbar
+    public func updateToolbar(){
+        if numberOfPhotos > 1 {
+            toolCounterLabel.text = "\(currentPageIndex + 1) of \(numberOfPhotos)"
+        } else {
+            toolCounterLabel.text = nil
+        }
+        
+    }
+    
+    // MARK: - Paging
     public func didStartViewingPageAtIndex(index: Int){
         let currentPhoto = photoAtIndex(index)
         loadAdjacentPhotosIfNecessary(currentPhoto)
@@ -250,7 +329,6 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
     }
     
     // MARK: - panGestureRecognized
-    
     public func panGestureRecognized(sender:UIPanGestureRecognizer){
         
         let scrollView = pageDisplayedAtIndex(currentPageIndex)
@@ -326,7 +404,7 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
     }
     
     
-    // MARK: - perform
+    // MARK: - perform animation
     public func performPresentAnimation(){
         view.alpha = 0.0
         pagingScrollView.alpha = 0.0
@@ -399,12 +477,7 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
                 self.dismissViewControllerAnimated(true, completion: {})
         })
     }
-    
-    public func prepareForClosePhotoBrowser(){
-        applicationWindow.removeGestureRecognizer(panGesture)
-        NSObject.cancelPreviousPerformRequestsWithTarget(self)
-    }
-    
+
     public func getImageFromView(sender:UIView) -> UIImage{
         
         let maskLayer = CAShapeLayer()
@@ -501,6 +574,50 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         return thePage
     }
     
+    
+    // MARK: - Control Hiding / Showing
+    public func cancelControlHiding(){
+        if controlVisibilityTimer != nil{
+            controlVisibilityTimer.invalidate()
+            controlVisibilityTimer = nil
+        }
+    }
+    
+    public func hideControlsAfterDelay(){
+        // reset
+        cancelControlHiding()
+        // start
+        controlVisibilityTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: "hideControls:", userInfo: nil, repeats: false)
+        
+    }
+    
+    public func hideControls(timer: NSTimer){
+        setControlsHidden(true, animated: true, permanent: false)
+    }
+    
+    public func setControlsHidden(hidden:Bool, animated:Bool, permanent:Bool){
+        cancelControlHiding()
+        
+        UIView.animateWithDuration(0.35,
+            animations: { () -> Void in
+                let alpha:CGFloat = hidden ? 0.0 : 1.0
+                self.doneButton.alpha = alpha
+                self.toolBar.alpha = alpha
+            },
+            completion: { (Bool) -> Void in
+        })
+        
+        if !permanent {
+            hideControlsAfterDelay()
+        }
+        
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    public func areControlsHidden() -> Bool{
+        return true
+    }
+    
     // MARK: - Button
     public func doneButtonPressed(sender:UIButton) {
         if currentPageIndex == initialPageIndex {
@@ -541,5 +658,12 @@ public class HoneycombPhotoBrowser: UIViewController, UIScrollViewDelegate{
         if currentPageIndex != previousCurrentPage {
             didStartViewingPageAtIndex(currentPageIndex)
         }
+    }
+    
+    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        setControlsHidden(true, animated: true, permanent: false)
+    }
+    
+    public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     }
 }

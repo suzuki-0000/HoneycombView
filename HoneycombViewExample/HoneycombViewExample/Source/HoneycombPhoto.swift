@@ -13,21 +13,13 @@ public class HoneycombPhoto:NSObject {
     
     var underlyingImage:UIImage!
     
-    var caption:String?
-    var placeHolderImage:UIImage?
-    var photoURL:String?
-    
     override init() {
         super.init()
     }
     
     convenience init(image: UIImage){
         self.init()
-        underlyingImage = image;
-    }
-    
-    public func getUnderlyingImage() -> UIImage {
-        return underlyingImage
+        underlyingImage = image
     }
     
     public func unloadUnderlyingImage(){
@@ -40,5 +32,4 @@ public class HoneycombPhoto:NSObject {
     class func photoWithImage(image: UIImage) -> HoneycombPhoto {
         return HoneycombPhoto(image: image)
     }
-    
 }
