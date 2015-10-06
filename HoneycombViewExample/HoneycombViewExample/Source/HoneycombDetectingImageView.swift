@@ -3,16 +3,15 @@
 //  HoneycombViewExample
 //
 //  Created by suzuki_keishi on 2015/10/01.
-//  Copyright © 2015年 suzuki_keishi. All rights reserved.
+//  Copyright © 2015 suzuki_keishi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 @objc protocol HoneycombDetectingImageViewDelegate {
-    func handleSingleTap(view:UIView, touch: UITouch)
-    func handleDoubleTap(view:UIView, touch: UITouch)
+    func handleImageViewSingleTap(view:UIImageView, touch: UITouch)
+    func handleImageViewDoubleTap(view:UIImageView, touch: UITouch)
 }
-
 
 class HoneycombDetectingImageView:UIImageView{
     
@@ -31,9 +30,9 @@ class HoneycombDetectingImageView:UIImageView{
     }
     
     func handleSingleTap(touch: UITouch) {
-        delegate?.handleSingleTap(self, touch: touch)
+        delegate?.handleImageViewSingleTap(self, touch: touch)
     }
     func handleDoubleTap(touch: UITouch) {
-        delegate?.handleDoubleTap(self, touch: touch)
+        delegate?.handleImageViewDoubleTap(self, touch: touch)
     }
 }

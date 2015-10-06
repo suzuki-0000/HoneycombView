@@ -3,7 +3,7 @@
 //  HoneycombViewExample
 //
 //  Created by suzuki_keishi on 2015/10/01.
-//  Copyright © 2015年 suzuki_keishi. All rights reserved.
+//  Copyright © 2015 suzuki_keishi. All rights reserved.
 //
 
 import UIKit
@@ -20,12 +20,6 @@ public class HoneycombPhoto:NSObject {
     convenience init(image: UIImage){
         self.init()
         underlyingImage = image
-    }
-    
-    public func unloadUnderlyingImage(){
-        if underlyingImage != nil {
-            underlyingImage = nil
-        }
     }
     
     // MARK: - class func

@@ -3,14 +3,14 @@
 //  HoneycombViewExample
 //
 //  Created by suzuki_keihsi on 2015/10/01.
-//  Copyright © 2015年 suzuki_keishi. All rights reserved.
+//  Copyright © 2015 suzuki_keishi. All rights reserved.
 //
 
 import UIKit
 
 public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, HoneycombDetectingViewDelegate, HoneycombDetectingImageViewDelegate{
     
-    var photoBrowser:HoneycombPhotoBrowser!
+    weak var photoBrowser:HoneycombPhotoBrowser!
     var photo:HoneycombPhoto!{
         didSet{
             photoImageView.image = nil
@@ -34,7 +34,6 @@ public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, Hone
     convenience init(frame: CGRect, browser: HoneycombPhotoBrowser) {
         self.init(frame: frame)
         photoBrowser = browser
-        
         setup()
     }
     
@@ -64,10 +63,9 @@ public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, Hone
     
     // MARK: - override
     public override func layoutSubviews() {
+        super.layoutSubviews()
         
         tapView.frame = bounds
-        
-        super.layoutSubviews()
         
         let boundsSize = bounds.size
         var frameToCenter = photoImageView.frame
@@ -106,13 +104,21 @@ public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, Hone
         
         let xScale = boundsSize.width / imageSize.width
         let yScale = boundsSize.height / imageSize.height
-        let maxScale:CGFloat = 4.0
+        var maxScale:CGFloat = 4.0
         let minScale:CGFloat = min(xScale, yScale)
         
         maximumZoomScale = maxScale
         minimumZoomScale = minScale
         zoomScale = minScale
         
+        // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
+        // maximum zoom scale to 0.5
+        maxScale = maxScale / UIScreen.mainScreen().scale
+        if maxScale < minScale {
+            maxScale = minScale * 2
+        }
+        
+        // reset position
         photoImageView.frame = CGRectMake(0, 0, photoImageView.frame.size.width, photoImageView.frame.size.height)
         setNeedsLayout()
     }
@@ -131,7 +137,7 @@ public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, Hone
         
         if photo != nil {
             
-            let image = photoBrowser.imageForPhoto(photo)
+            let image = photo.underlyingImage
             
             photoImageView.image = image
 
@@ -146,24 +152,34 @@ public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, Hone
             contentSize = photoImageViewFrame.size
             
             setMaxMinZoomScalesForCurrentBounds()
-        } else {
         }
+        
         setNeedsLayout()
     }
 
+    // MARK: - handle tap
+    public func handleDoubleTap(touchPoint: CGPoint){
+        NSObject.cancelPreviousPerformRequestsWithTarget(photoBrowser)
+        
+        if zoomScale == maximumZoomScale {
+            // zoom out
+            setZoomScale(minimumZoomScale, animated: true)
+        } else {
+            // zoom in
+            zoomToRect(CGRectMake(touchPoint.x, touchPoint.y, 1, 1), animated:true)
+        }
+        
+        // delay control
+        photoBrowser.hideControlsAfterDelay()
+    }
     
     // MARK: - UIScrollViewDelegate
     public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return photoImageView
     }
     
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-    }
-    
     public func scrollViewWillBeginZooming(scrollView: UIScrollView, withView view: UIView?) {
-    }
-   
-    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        photoBrowser.cancelControlHiding()
     }
     
     public func scrollViewDidZoom(scrollView: UIScrollView) {
@@ -174,15 +190,19 @@ public class HoneycombZoomingScrollView:UIScrollView, UIScrollViewDelegate, Hone
     
     // MARK: - HoneycombDetectingViewDelegate
     func handleSingleTap(view: UIView, touch: UITouch) {
+        photoBrowser.toggleControls()
     }
     
     func handleDoubleTap(view: UIView, touch: UITouch) {
+        handleDoubleTap(touch.locationInView(view))
     }
     
-    // MARK: - Tap Detection
+    // MARK: - HoneycombDetectingImageViewDelegate
+    func handleImageViewSingleTap(view: UIImageView, touch: UITouch) {
+        photoBrowser.toggleControls()
+    }
     
-    
-    
-    
-    
+    func handleImageViewDoubleTap(view: UIImageView, touch: UITouch) {
+        handleDoubleTap(touch.locationInView(view))
+    }
 }

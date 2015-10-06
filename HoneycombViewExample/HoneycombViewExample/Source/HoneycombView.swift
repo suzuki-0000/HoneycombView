@@ -3,7 +3,7 @@
 //  HoneycombView
 //
 //  Created by suzuki_keishi on 7/1/15.
-//  Copyright (c) 2015 suzuki_keishi. All rights reserved.
+//  Copyright © 2015 suzuki_keishi. All rights reserved.
 //
 
 import UIKit
@@ -20,7 +20,6 @@ public class HoneycombView: UIView{
     public var honeycombBackgroundColor = UIColor.blackColor()
     public var shouldCacheImage = false
     public var images = [HoneycombPhoto]()
-//    public var images = [IDMPhoto]()
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -78,14 +77,6 @@ public class HoneycombView: UIView{
         }
         return photos
     }
-//    private func resizeImage(images:[UIImage]) -> [IDMPhoto]{
-//        var idmPhotos = [IDMPhoto]()
-//        
-//        for image in images {
-//            idmPhotos.append(IDMPhoto(image: image.createHoneycombPhoto()))
-//        }
-//        return idmPhotos
-//    }
     
     private func initializeHoneyCombChildView(point:CGPoint) -> HoneycombChildView{
         let v = HoneycombChildView(frame: CGRectMake(0, 0, diameter, diameter))
@@ -245,32 +236,11 @@ public class HoneycombChildView: UIButton{
         if let sv = superview as? HoneycombView{
             let browser = HoneycombPhotoBrowser(photos: sv.images, animatedFromView: sender)
             browser.initializePageIndex(sender.tag)
-//            let browser = IDMPhotoBrowser(photos: sv.images, animatedFromView: sender)
-//            browser.displayActionButton = true
-//            browser.displayArrowButton = true
-//            browser.displayCounterLabel = true
-//            browser.usePopAnimation = true
-//            browser.scaleImage = sender.currentImage
-//            browser.setInitialPageIndex(UInt(sender.tag))
-            
-            
             if let vc = UIApplication.sharedApplication().keyWindow?.rootViewController{
                 vc.presentViewController(browser, animated: true, completion: {})
             }
         }
     }
-    
-    // MARK: - private
-//    func setHoneycombImage(image:IDMPhoto){
-//        honeycombImageView.image = image.underlyingImage()
-//    }
-//    func setHoneycombImageFromURL(url:String){
-//        honeycombImageView.imageFromURL(url, placeholder: UIImage()){[weak self] image in
-//            if let _self = self, let sv = _self.superview as? HoneycombView {
-//                sv.images.append(IDMPhoto(image: image.createHoneycombPhoto()))
-//            }
-//        }
-//    }
     
     func setHoneycombImage(image:HoneycombPhoto){
         honeycombImageView.image = image.underlyingImage
