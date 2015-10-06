@@ -8,17 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		8976D2DE1B5F4E570016408F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2DD1B5F4E570016408F /* AppDelegate.swift */; };
-		8976D2E51B5F4E570016408F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8976D2E41B5F4E570016408F /* Images.xcassets */; };
 		8976D2E81B5F4E570016408F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8976D2E61B5F4E570016408F /* LaunchScreen.xib */; };
 		8976D2F41B5F4E580016408F /* HoneycombViewExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2F31B5F4E580016408F /* HoneycombViewExampleTests.swift */; };
 		8976D3011B5F4E740016408F /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8976D2FE1B5F4E740016408F /* FirstViewController.swift */; };
 		8976D3051B5F4E8B0016408F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8976D3041B5F4E8B0016408F /* Main.storyboard */; };
-		897959AB1BBA9B5700781508 /* HoneycombView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897959AA1BBA9B5700781508 /* HoneycombView.swift */; settings = {ASSET_TAGS = (); }; };
-		89978FA21BBCF7A9003C0160 /* HoneycombZoomingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89978FA11BBCF7A9003C0160 /* HoneycombZoomingScrollView.swift */; settings = {ASSET_TAGS = (); }; };
-		89978FA41BBCF7C7003C0160 /* HoneycombPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89978FA31BBCF7C7003C0160 /* HoneycombPhoto.swift */; settings = {ASSET_TAGS = (); }; };
-		89978FA61BBCF7EC003C0160 /* HoneycombPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89978FA51BBCF7EC003C0160 /* HoneycombPhotoBrowser.swift */; settings = {ASSET_TAGS = (); }; };
-		89AA1EE71BBD326D00D80310 /* HoneycombDetectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AA1EE61BBD326D00D80310 /* HoneycombDetectingView.swift */; settings = {ASSET_TAGS = (); }; };
-		89AA1EE91BBD327600D80310 /* HoneycombDetectingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AA1EE81BBD327600D80310 /* HoneycombDetectingImageView.swift */; settings = {ASSET_TAGS = (); }; };
 		89AC9DF51B5F80BE0072EA65 /* image0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89AC9DEA1B5F80BE0072EA65 /* image0.jpg */; };
 		89AC9DF61B5F80BE0072EA65 /* image1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89AC9DEB1B5F80BE0072EA65 /* image1.jpg */; };
 		89AC9DF71B5F80BE0072EA65 /* image2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89AC9DEC1B5F80BE0072EA65 /* image2.jpg */; };
@@ -40,38 +33,33 @@
 			remoteGlobalIDString = 8976D2D71B5F4E570016408F;
 			remoteInfo = HoneycombViewExample;
 		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		89962E011BBA830800FE0CD6 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
+		899B8B9F1BC3A36200B8F9C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 899B8B9A1BC3A36200B8F9C3 /* HoneycombView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8976D2AF1B5F3CBC0016408F;
+			remoteInfo = HoneycombView;
 		};
-/* End PBXCopyFilesBuildPhase section */
+		899B8BA11BC3A36200B8F9C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 899B8B9A1BC3A36200B8F9C3 /* HoneycombView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8976D2BA1B5F3CBC0016408F;
+			remoteInfo = HoneycombViewTests;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8976D2D81B5F4E570016408F /* HoneycombViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoneycombViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8976D2DC1B5F4E570016408F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8976D2DD1B5F4E570016408F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8976D2E41B5F4E570016408F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8976D2E71B5F4E570016408F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		8976D2ED1B5F4E580016408F /* HoneycombViewExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoneycombViewExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8976D2F21B5F4E580016408F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8976D2F31B5F4E580016408F /* HoneycombViewExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoneycombViewExampleTests.swift; sourceTree = "<group>"; };
 		8976D2FE1B5F4E740016408F /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		8976D3041B5F4E8B0016408F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		897959AA1BBA9B5700781508 /* HoneycombView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombView.swift; sourceTree = "<group>"; };
-		89978FA11BBCF7A9003C0160 /* HoneycombZoomingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombZoomingScrollView.swift; sourceTree = "<group>"; };
-		89978FA31BBCF7C7003C0160 /* HoneycombPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombPhoto.swift; sourceTree = "<group>"; };
-		89978FA51BBCF7EC003C0160 /* HoneycombPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombPhotoBrowser.swift; sourceTree = "<group>"; };
-		89AA1EE61BBD326D00D80310 /* HoneycombDetectingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombDetectingView.swift; sourceTree = "<group>"; };
-		89AA1EE81BBD327600D80310 /* HoneycombDetectingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoneycombDetectingImageView.swift; sourceTree = "<group>"; };
+		899B8B9A1BC3A36200B8F9C3 /* HoneycombView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HoneycombView.xcodeproj; path = ../HoneycombView.xcodeproj; sourceTree = "<group>"; };
 		89AC9DEA1B5F80BE0072EA65 /* image0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image0.jpg; sourceTree = "<group>"; };
 		89AC9DEB1B5F80BE0072EA65 /* image1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image1.jpg; sourceTree = "<group>"; };
 		89AC9DEC1B5F80BE0072EA65 /* image2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image2.jpg; sourceTree = "<group>"; };
@@ -86,13 +74,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5B5AAEA13EB622BC21C1E69A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8976D2EA1B5F4E580016408F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -106,8 +87,6 @@
 		01307157DFD32D15396C853D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AE93C1D8652336F42B07A371 /* Pods.debug.xcconfig */,
-				DBEE26C8D23C72E6B47BB12E /* Pods.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -115,6 +94,7 @@
 		8976D2CF1B5F4E570016408F = {
 			isa = PBXGroup;
 			children = (
+				899B8B9A1BC3A36200B8F9C3 /* HoneycombView.xcodeproj */,
 				8976D2DA1B5F4E570016408F /* HoneycombViewExample */,
 				8976D2F01B5F4E580016408F /* HoneycombViewExampleTests */,
 				8976D2D91B5F4E570016408F /* Products */,
@@ -135,11 +115,9 @@
 		8976D2DA1B5F4E570016408F /* HoneycombViewExample */ = {
 			isa = PBXGroup;
 			children = (
-				897959A91BBA9B4800781508 /* Source */,
 				8976D2FD1B5F4E6B0016408F /* Controllers */,
 				8976D2DD1B5F4E570016408F /* AppDelegate.swift */,
 				8976D3041B5F4E8B0016408F /* Main.storyboard */,
-				8976D2E41B5F4E570016408F /* Images.xcassets */,
 				8976D2E61B5F4E570016408F /* LaunchScreen.xib */,
 				8976D2DB1B5F4E570016408F /* Supporting Files */,
 			);
@@ -180,17 +158,13 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		897959A91BBA9B4800781508 /* Source */ = {
+		899B8B9B1BC3A36200B8F9C3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				89AA1EE61BBD326D00D80310 /* HoneycombDetectingView.swift */,
-				89AA1EE81BBD327600D80310 /* HoneycombDetectingImageView.swift */,
-				897959AA1BBA9B5700781508 /* HoneycombView.swift */,
-				89978FA31BBCF7C7003C0160 /* HoneycombPhoto.swift */,
-				89978FA51BBCF7EC003C0160 /* HoneycombPhotoBrowser.swift */,
-				89978FA11BBCF7A9003C0160 /* HoneycombZoomingScrollView.swift */,
+				899B8BA01BC3A36200B8F9C3 /* HoneycombView.framework */,
+				899B8BA21BC3A36200B8F9C3 /* HoneycombViewTests.xctest */,
 			);
-			path = Source;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		89AC9DE91B5F80B10072EA65 /* SampleImages */ = {
@@ -214,9 +188,6 @@
 		CB71ECA1CE061D74980CCAAA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				89978EB61BBCC6E3003C0160 /* pop.framework */,
-				89978EB41BBCC6E0003C0160 /* DACircularProgress.framework */,
-				12DF8C2F155D46B83A21303B /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -230,8 +201,6 @@
 			buildPhases = (
 				8976D2D41B5F4E570016408F /* Sources */,
 				8976D2D61B5F4E570016408F /* Resources */,
-				89962E011BBA830800FE0CD6 /* Embed Frameworks */,
-				5B5AAEA13EB622BC21C1E69A /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -291,6 +260,12 @@
 			mainGroup = 8976D2CF1B5F4E570016408F;
 			productRefGroup = 8976D2D91B5F4E570016408F /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 899B8B9B1BC3A36200B8F9C3 /* Products */;
+					ProjectRef = 899B8B9A1BC3A36200B8F9C3 /* HoneycombView.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8976D2D71B5F4E570016408F /* HoneycombViewExample */,
@@ -298,6 +273,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		899B8BA01BC3A36200B8F9C3 /* HoneycombView.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HoneycombView.framework;
+			remoteRef = 899B8B9F1BC3A36200B8F9C3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		899B8BA21BC3A36200B8F9C3 /* HoneycombViewTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = HoneycombViewTests.xctest;
+			remoteRef = 899B8BA11BC3A36200B8F9C3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8976D2D61B5F4E570016408F /* Resources */ = {
@@ -312,7 +304,6 @@
 				89AC9DFD1B5F80BE0072EA65 /* image8.jpg in Resources */,
 				89AC9DFF1B5F80BE0072EA65 /* image10.jpg in Resources */,
 				8976D2E81B5F4E570016408F /* LaunchScreen.xib in Resources */,
-				8976D2E51B5F4E570016408F /* Images.xcassets in Resources */,
 				89AC9DFB1B5F80BE0072EA65 /* image6.jpg in Resources */,
 				89AC9DF71B5F80BE0072EA65 /* image2.jpg in Resources */,
 				89AC9DFC1B5F80BE0072EA65 /* image7.jpg in Resources */,
@@ -335,12 +326,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89AA1EE71BBD326D00D80310 /* HoneycombDetectingView.swift in Sources */,
-				89978FA41BBCF7C7003C0160 /* HoneycombPhoto.swift in Sources */,
-				89978FA21BBCF7A9003C0160 /* HoneycombZoomingScrollView.swift in Sources */,
-				89978FA61BBCF7EC003C0160 /* HoneycombPhotoBrowser.swift in Sources */,
-				897959AB1BBA9B5700781508 /* HoneycombView.swift in Sources */,
-				89AA1EE91BBD327600D80310 /* HoneycombDetectingImageView.swift in Sources */,
 				8976D3011B5F4E740016408F /* FirstViewController.swift in Sources */,
 				8976D2DE1B5F4E570016408F /* AppDelegate.swift in Sources */,
 			);
@@ -464,16 +449,11 @@
 		};
 		8976D2F81B5F4E580016408F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AE93C1D8652336F42B07A371 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/a12556/workspace/_origin/HoneycombView/Carthage/Build/iOS,
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Pods",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "HoneycombViewExample/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -486,16 +466,11 @@
 		};
 		8976D2F91B5F4E580016408F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DBEE26C8D23C72E6B47BB12E /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/a12556/workspace/_origin/HoneycombView/Carthage/Build/iOS,
-					"$(PROJECT_DIR)/build/Debug-iphoneos/Pods",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "HoneycombViewExample/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import HoneycombView
 
 class FirstViewController: UIViewController{
     
