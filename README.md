@@ -2,21 +2,16 @@ HoneycombView
 ========================
 
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/HoneycombView.svg?style=flat)](http://cocoadocs.org/docsets/HoneycombView)
-[![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
-)](https://developer.apple.com/iphone/index.action)
-[![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat
-)](https://developer.apple.com/swift)
-[![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
-)](http://mit-license.org)
+[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/HoneycombView.svg?style=flat)](http://cocoadocs.org/docsets/HoneycombView))](https://developer.apple.com/iphone/index.action)
+[![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat)](https://developer.apple.com/swift)
 
-iOS UIView for Honeycomb layout. 
+iOS UIView for Honeycomb layout include with photoBrowser.
 
 ![sample](Screenshots/HoneycombViewSample1.gif)
 
 ## Requirements
 - iOS 8.0+
-- Swift 1.2+
+- Swift 2.0+
 - ARC
 
 ##Installation
@@ -61,13 +56,13 @@ You can also use from URL(String) with NSCache.
 - With Images from URL
 ```swift
   for i in 0..<30{
-    var user = User(id: i, profileImageURL: "https://placeimg.com/100/100/any")
+    let user = User(id: i, profileImageURL: "https://placehold.jp/150x150.png")
     users.append(user)
   }
         
   let honeycombView = HoneycombView(frame: CGRectMake(0, 0, view.frame.width, view.frame.height))
-  honeycombView.diameter = 200.0
-  honeycombView.margin = 0.0
+  honeycombView.diameter = 100.0
+  honeycombView.margin = 1.0
   honeycombView.configrationForHoneycombViewWithURL(users.map{ $0.profileImageURL })
   view.addSubview(honeycombView)
 
@@ -80,16 +75,11 @@ Set margin parameter to 0 if you don't need margin for honeycomb.
 
 ![sample](Screenshots/HoneycombViewSample2.gif)
 
-### Attention when using
-The subviews of honeycombView will add to views automatically depends on the size of the diameter.
-So don't specify diameter too small or you'll get heavy rendering.
-
-## Contributing
-Forks, patches and other feedback are welcome.
+PhotoBrowser is inspired by [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser).
 
 ## Photos from 
 - [Unsplash](https://unsplash.com)
-- [PlaceImg](https://placeimg.com)
+- [placehold](https://placehold)
 
 ## License
 HoneycombView is available under the MIT license. See the LICENSE file for more info.
