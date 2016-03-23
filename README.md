@@ -3,7 +3,6 @@ HoneycombView
 
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/HoneycombView.svg?style=flat)](http://cocoadocs.org/docsets/HoneycombView)
-[![Swift 2.0](https://img.shields.io/badge/Swift-2.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 
 iOS UIView for Honeycomb layout include with photoBrowser.
 
@@ -74,8 +73,6 @@ Set margin parameter to 0 if you don't need margin for honeycomb.
 - margin
 
 ![sample](Screenshots/HoneycombViewSample2.gif)
-
-PhotoBrowser is inspired by [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser).
 
 ## Photos from 
 - [Unsplash](https://unsplash.com)
